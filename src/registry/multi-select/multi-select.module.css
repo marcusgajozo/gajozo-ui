@@ -1,0 +1,336 @@
+:root {
+  --ms-font-family: system-ui, -apple-system, sans-serif;
+  --ms-font-size: 0.875rem;
+
+  --ms-border-color: #d1d5db;
+  --ms-border-radius: 0.375rem;
+  --ms-border-width: 1px;
+
+  --ms-focus-ring-color: #3b82f6;
+  --ms-focus-ring-width: 2px;
+
+  --ms-trigger-bg: #ffffff;
+  --ms-trigger-min-height: 2.5rem;
+  --ms-trigger-padding: 0.375rem 0.5rem;
+
+  --ms-chip-bg: #dbeafe;
+  --ms-chip-color: #1e40af;
+  --ms-chip-border-radius: 0.25rem;
+  --ms-chip-padding: 0.125rem 0.375rem;
+  --ms-chip-max-width: 140px;
+
+  --ms-dropdown-bg: #ffffff;
+  --ms-dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --ms-dropdown-max-height: 16rem;
+  --ms-dropdown-z-index: 50;
+
+  --ms-option-padding: 0.5rem 0.75rem;
+  --ms-option-hover-bg: #f3f4f6;
+  --ms-option-selected-bg: #eff6ff;
+  --ms-option-selected-color: #1d4ed8;
+  --ms-option-focused-bg: #dbeafe;
+  --ms-option-disabled-color: #9ca3af;
+  --ms-option-check-width: 1.25rem;
+
+  --ms-search-padding: 0.5rem 0.75rem;
+  --ms-placeholder-color: #6b6b6b;
+  --ms-disabled-bg: #f9fafb;
+  --ms-disabled-opacity: 0.6;
+  --ms-clear-color: #6b7280;
+  --ms-chevron-color: #6b7280;
+}
+
+/* Container */
+
+.container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  font-family: var(--ms-font-family);
+  font-size: var(--ms-font-size);
+  box-sizing: border-box;
+}
+
+/* Trigger */
+
+.trigger {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: var(--ms-trigger-min-height);
+  padding: var(--ms-trigger-padding);
+  background: var(--ms-trigger-bg);
+  border: var(--ms-border-width) solid var(--ms-border-color);
+  border-radius: var(--ms-border-radius);
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 0.25rem;
+  text-align: left;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trigger:focus-visible {
+  border-color: var(--ms-focus-ring-color);
+  box-shadow: 0 0 0 var(--ms-focus-ring-width) rgba(59, 130, 246, 0.3);
+}
+
+.triggerOpen {
+  border-color: var(--ms-focus-ring-color);
+  box-shadow: 0 0 0 var(--ms-focus-ring-width) rgba(59, 130, 246, 0.3);
+}
+
+/* Chip area */
+
+.chipArea {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+}
+
+.placeholder {
+  color: var(--ms-placeholder-color);
+  line-height: 1.5;
+}
+
+/* Chips */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: var(--ms-chip-padding);
+  background: var(--ms-chip-bg);
+  color: var(--ms-chip-color);
+  border-radius: var(--ms-chip-border-radius);
+  max-width: var(--ms-chip-max-width);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.chipLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chipRemove {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  font-size: 0.875rem;
+  color: var(--ms-chip-color);
+  opacity: 0.7;
+  transition: opacity 0.1s ease;
+}
+
+.chipRemove:hover {
+  opacity: 1;
+}
+
+.chipRemove:focus-visible {
+  outline: var(--ms-focus-ring-width) solid var(--ms-focus-ring-color);
+  outline-offset: 1px;
+  opacity: 1;
+}
+
+/* Actions (right side) */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.clearAll {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ms-clear-color);
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.1s ease;
+}
+
+.clearAll:hover {
+  opacity: 1;
+}
+
+.clearAll:focus-visible {
+  outline: var(--ms-focus-ring-width) solid var(--ms-focus-ring-color);
+  outline-offset: 1px;
+  opacity: 1;
+}
+
+.chevron {
+  display: inline-block;
+  color: var(--ms-chevron-color);
+  transition: transform 0.15s ease;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+
+.dropdownHidden {
+  display: none;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--ms-dropdown-bg);
+  border: var(--ms-border-width) solid var(--ms-border-color);
+  border-radius: var(--ms-border-radius);
+  box-shadow: var(--ms-dropdown-shadow);
+  z-index: var(--ms-dropdown-z-index);
+  overflow: hidden;
+}
+
+/* Search */
+
+.searchWrapper {
+  padding: var(--ms-search-padding);
+  border-bottom: var(--ms-border-width) solid var(--ms-border-color);
+}
+
+.searchInput {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  background: transparent;
+  box-sizing: border-box;
+  color: inherit;
+}
+
+.searchInput::placeholder {
+  color: var(--ms-placeholder-color);
+}
+
+/* Listbox */
+
+.listbox {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: var(--ms-dropdown-max-height);
+  overflow-y: auto;
+}
+
+/* Options */
+
+.option {
+  display: flex;
+  align-items: center;
+  padding: var(--ms-option-padding);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.1s ease;
+}
+
+.option:hover:not(.optionDisabled) {
+  background: var(--ms-option-hover-bg);
+}
+
+.optionSelected {
+  background: var(--ms-option-selected-bg);
+  color: var(--ms-option-selected-color);
+}
+
+.optionFocused:not(.optionDisabled) {
+  background: var(--ms-option-focused-bg);
+  outline: none;
+}
+
+.optionDisabled {
+  color: var(--ms-option-disabled-color);
+  cursor: not-allowed;
+}
+
+.optionCheck {
+  width: var(--ms-option-check-width);
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.optionLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noOptions {
+  padding: var(--ms-option-padding);
+  color: var(--ms-placeholder-color);
+  font-style: italic;
+  text-align: center;
+}
+
+/* Disabled state */
+
+.disabled .trigger {
+  background: var(--ms-disabled-bg);
+  opacity: var(--ms-disabled-opacity);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Mobile: bottom-sheet dropdown */
+
+@media (max-width: 640px) {
+  .dropdown {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: var(--ms-border-radius) var(--ms-border-radius) 0 0;
+    max-height: 60vh;
+  }
+
+  .listbox {
+    max-height: calc(60vh - 3.5rem);
+  }
+
+  .option {
+    padding: 0.75rem 1rem;
+    min-height: 44px;
+  }
+
+  .chipRemove,
+  .clearAll {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
