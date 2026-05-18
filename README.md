@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+# Gajozo UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A copy-paste React component library. No npm package, no framework lock-in — just copy the component folder into your project.
 
-Currently, two official plugins are available:
+## Philosophy
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Copy-paste:** Each component is a self-contained folder with an `index.tsx` and a `*.module.css`. Copy it, use it.
+- **Zero runtime deps:** Components depend only on React. No UI library, no shared utilities, no CSS-in-JS runtime.
+- **Broad compatibility:** Targets React 16.8 (hooks era) through React 19 — no `useId`, no concurrent-only APIs, no RSC.
+- **Accessible:** WAI-ARIA patterns, full keyboard navigation, and focus management included out of the box.
+- **Themeable:** CSS custom properties for easy design token overrides.
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Tool                | Version   | Purpose                    |
+| ------------------- | --------- | -------------------------- |
+| React               | 16.8 – 19 | UI library (peer dep only) |
+| TypeScript          | ~6        | Type safety                |
+| Vite                | 8         | Bundler & dev server       |
+| CSS Modules         | —         | Scoped styles, no runtime  |
+| Storybook           | 10        | Component explorer & docs  |
+| Vitest + Playwright | 4         | Browser interaction tests  |
 
-## Expanding the ESLint configuration
+## Available Components
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Component     | Folder                       | Description                                                                |
+| ------------- | ---------------------------- | -------------------------------------------------------------------------- |
+| `Select`      | `src/registry/select/`       | Single-value dropdown with keyboard nav, label, and required state         |
+| `MultiSelect` | `src/registry/multi-select/` | Multi-value dropdown with search, chips, clear-all, and max-selected limit |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
+pnpm storybook         # dev server at http://localhost:6006
+pnpm build-storybook   # static build → storybook-static/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Using a Component
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Open the component in Storybook.
+2. Click **Copiar index.tsx** or **Copiar CSS** to copy individual files to the clipboard.
+3. Or click **Baixar ZIP** to download both files as a zip archive.
+4. Drop the files into your project and import the component.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+No configuration or shared utilities needed — each component is entirely self-contained.
+
+## Deployment
+
+The Storybook static build can be served as a plain website:
+
+```bash
+# Build
+docker build -t gajozo-ui .
+
+# Run
+docker run -p 8080:80 gajozo-ui
 ```
+
+The `Dockerfile` uses a three-stage build (deps → Storybook build → nginx:alpine) for minimal image size.
+
+## License
+
+Apache License 2.0
