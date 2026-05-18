@@ -1,4 +1,4 @@
-* 
+*
 
 !.github
 !.github/**/*
@@ -6,21 +6,13 @@
 !.storybook/**/*
 !src
 !src/**/*
-!.gitignore
 !.npmrc
-!.nvmrc
-!Dockerfile
-!eslint.config.js
-!index.html
-!LICENSE
 !nginx.conf
-!pnpm-lock.yaml
 !package.json
-!README.md
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
 !tsconfig.app.json
 !tsconfig.json
 !tsconfig.node.json
 !vite.config.ts
 !vitest.shims.d.ts
-!pnpm-workspace.yaml
-!.dockerignore
