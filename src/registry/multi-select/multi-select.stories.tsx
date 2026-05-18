@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within, expect, fn } from 'storybook/test';
 import { MultiSelect } from './index';
+import { CodeViewer } from '../../storybook/code-viewer';
+import indexSrc from './index.tsx?raw';
+import cssSrc from './multi-select.module.css?raw';
 
 const FRAMEWORKS: { value: string; label: string; disabled?: boolean }[] = [
   { value: 'react', label: 'React' },
@@ -26,8 +29,26 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Default state: trigger closed, placeholder visible. */
-export const Default: Story = {};
+/** Default state with source code viewer. */
+export const Default: Story = {
+  parameters: { layout: 'padded' },
+  render: (args) => (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '32px 0' }}>
+        <div style={{ width: '320px' }}>
+          <MultiSelect {...args} />
+        </div>
+      </div>
+      <CodeViewer
+        files={[
+          { name: 'index.tsx', content: indexSrc, language: 'tsx' },
+          { name: 'multi-select.module.css', content: cssSrc, language: 'css' },
+        ]}
+        zipName="multi-select"
+      />
+    </div>
+  ),
+};
 
 /** Pre-selected items passed via `value` (controlled mode). */
 export const WithPreselected: Story = {
