@@ -1,14 +1,18 @@
 * 
 
+!.github
+!.github/**/*
 !.storybook
 !.storybook/**/*
 !src
 !src/**/*
 !.nvmrc
+!Dockerfile
 !eslint.config.js
 !index.html
 !LICENSE
-!package-lock.json
+!nginx.conf
+!pnpm-lock.yaml
 !package.json
 !README.md
 !tsconfig.app.json
