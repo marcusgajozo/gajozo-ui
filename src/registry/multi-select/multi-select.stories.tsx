@@ -125,6 +125,66 @@ export const Searchable: Story = {
   },
 };
 
+/** Width stays fixed at 100% of the parent regardless of how many items are selected. */
+export const FixedWidth: Story = {
+  decorators: [
+    Story => (
+      <div style={{ width: '320px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const container = canvasElement.querySelector('[role="combobox"]')!.parentElement!;
+    const widthBefore = container.getBoundingClientRect().width;
+
+    await userEvent.click(canvas.getByRole('combobox'));
+    await userEvent.click(canvas.getByRole('option', { name: /^React$/ }));
+    await userEvent.click(canvas.getByRole('option', { name: /^Vue$/ }));
+    await userEvent.click(canvas.getByRole('option', { name: /^Angular$/ }));
+    await userEvent.keyboard('{Escape}');
+
+    const widthAfter = container.getBoundingClientRect().width;
+    expect(widthAfter).toBe(widthBefore);
+  },
+};
+
+/** Label renders above the trigger and is linked via aria-labelledby. */
+export const WithLabel: Story = {
+  args: {
+    label: 'Frameworks favoritos',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const label = canvas.getByText('Frameworks favoritos');
+    expect(label).toBeTruthy();
+    expect(canvas.queryByText('*')).toBeNull();
+
+    const combobox = canvas.getByRole('combobox');
+    const labelId = label.getAttribute('id');
+    expect(combobox.getAttribute('aria-labelledby')).toBe(labelId);
+  },
+};
+
+/** Required shows a red asterisk after the label text. */
+export const WithLabelRequired: Story = {
+  args: {
+    label: 'Frameworks favoritos',
+    required: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    expect(canvas.getByText('Frameworks favoritos')).toBeTruthy();
+    expect(canvas.getByText('*')).toBeTruthy();
+
+    const combobox = canvas.getByRole('combobox');
+    expect(combobox.getAttribute('aria-required')).toBe('true');
+  },
+};
+
 /** Select items, then clear all with the × button. */
 export const ClearAll: Story = {
   play: async ({ canvasElement }) => {
