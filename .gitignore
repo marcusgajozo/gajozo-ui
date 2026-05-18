@@ -6,6 +6,8 @@
 !.storybook/**/*
 !src
 !src/**/*
+!.gitignore
+!.npmrc
 !.nvmrc
 !Dockerfile
 !eslint.config.js
