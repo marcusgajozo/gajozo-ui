@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import type { KeyboardEvent } from 'react';
 import styles from './select.module.css';
 
@@ -19,6 +19,8 @@ export interface SelectProps {
   className?: string;
   label?: string;
   required?: boolean;
+  searchPlaceholder?: string;
+  noOptionsMessage?: string;
   'aria-label'?: string;
   'aria-labelledby'?: string;
 }
@@ -40,12 +42,22 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
 
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const listboxRef = useRef<HTMLUListElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   const selectedOption = options.find(o => o.value === selected);
+
+  const filteredOptions = useMemo(
+    () =>
+      options.filter(
+        o => !searchQuery || o.label.toLowerCase().includes(searchQuery.toLowerCase()),
+      ),
+    [options, searchQuery],
+  );
 
   const close = useCallback(() => {
     setIsOpen(false);
@@ -53,6 +65,7 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
   }, []);
 
   const open = useCallback(() => {
+    setSearchQuery('');
     const idx = selected !== undefined ? options.findIndex(o => o.value === selected) : -1;
     setFocusedIndex(idx);
     setIsOpen(true);
@@ -70,16 +83,18 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
   }, [isOpen, close]);
 
   useEffect(() => {
-    if (isOpen) listboxRef.current?.focus();
+    if (isOpen) searchRef.current?.focus();
   }, [isOpen]);
 
   useEffect(() => {
     if (focusedIndex < 0 || !listboxRef.current) return;
-    const opt = options[focusedIndex];
+    const opt = filteredOptions[focusedIndex];
     if (!opt) return;
-    const el = listboxRef.current.querySelector<HTMLLIElement>(`[id="${id}-option-${opt.value}"]`);
+    const el = listboxRef.current.querySelector<HTMLLIElement>(
+      `[id="${id}-option-${opt.value}"]`,
+    );
     el?.scrollIntoView({ block: 'nearest' });
-  }, [focusedIndex, options, id]);
+  }, [focusedIndex, filteredOptions, id]);
 
   const selectOption = useCallback(
     (optValue: string) => {
@@ -114,22 +129,22 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
     [disabled, isOpen, close, open],
   );
 
-  const handleListboxKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLUListElement>) => {
+  const handleSearchKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
       switch (e.key) {
         case 'ArrowDown':
           e.preventDefault();
           setFocusedIndex(prev => {
             let next = prev + 1;
-            while (next < options.length && options[next]?.disabled) next++;
-            return next < options.length ? next : prev;
+            while (next < filteredOptions.length && filteredOptions[next]?.disabled) next++;
+            return next < filteredOptions.length ? next : prev;
           });
           break;
         case 'ArrowUp':
           e.preventDefault();
           setFocusedIndex(prev => {
             let next = prev - 1;
-            while (next >= 0 && options[next]?.disabled) next--;
+            while (next >= 0 && filteredOptions[next]?.disabled) next--;
             return next >= 0 ? next : prev;
           });
           break;
@@ -137,7 +152,7 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
         case ' ': {
           e.preventDefault();
           if (focusedIndex >= 0) {
-            const opt = options[focusedIndex];
+            const opt = filteredOptions[focusedIndex];
             if (opt && !opt.disabled) selectOption(opt.value);
           }
           break;
@@ -152,12 +167,12 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
           break;
       }
     },
-    [options, focusedIndex, selectOption, close],
+    [filteredOptions, focusedIndex, selectOption, close],
   );
 
   const focusedOptionId =
-    focusedIndex >= 0 && options[focusedIndex]
-      ? `${id}-option-${options[focusedIndex].value}`
+    focusedIndex >= 0 && filteredOptions[focusedIndex]
+      ? `${id}-option-${filteredOptions[focusedIndex].value}`
       : undefined;
 
   return {
@@ -167,14 +182,18 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
     isOpen,
     focusedIndex,
     focusedOptionId,
+    searchQuery,
+    setSearchQuery,
+    filteredOptions,
     containerRef,
     triggerRef,
     listboxRef,
+    searchRef,
     setFocusedIndex,
     selectOption,
     handleTriggerClick,
     handleTriggerKeyDown,
-    handleListboxKeyDown,
+    handleSearchKeyDown,
   };
 }
 
@@ -189,6 +208,8 @@ export function Select({
   className,
   label,
   required = false,
+  searchPlaceholder = 'Buscar...',
+  noOptionsMessage = 'Nenhuma opção encontrada',
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
 }: SelectProps) {
@@ -199,14 +220,18 @@ export function Select({
     isOpen,
     focusedIndex,
     focusedOptionId,
+    searchQuery,
+    setSearchQuery,
+    filteredOptions,
     containerRef,
     triggerRef,
     listboxRef,
+    searchRef,
     setFocusedIndex,
     selectOption,
     handleTriggerClick,
     handleTriggerKeyDown,
-    handleListboxKeyDown,
+    handleSearchKeyDown,
   } = useSelect({ options, value, defaultValue, onChange, disabled });
 
   const effectiveLabelledBy = ariaLabelledBy ?? (label ? `${id}-label` : undefined);
@@ -257,44 +282,62 @@ export function Select({
 
       {isOpen && (
         <div className={styles.dropdown} role="presentation">
+          <div className={styles.searchWrapper}>
+            <input
+              ref={searchRef}
+              role="searchbox"
+              type="text"
+              className={styles.searchInput}
+              placeholder={searchPlaceholder}
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
+              aria-label="Pesquisar opções"
+              aria-autocomplete="list"
+              aria-controls={`${id}-listbox`}
+              aria-activedescendant={focusedOptionId}
+            />
+          </div>
           <ul
             ref={listboxRef}
             id={`${id}-listbox`}
             role="listbox"
             aria-label={ariaLabel ?? placeholder}
-            aria-activedescendant={focusedOptionId}
             tabIndex={-1}
             className={styles.listbox}
-            onKeyDown={handleListboxKeyDown}
           >
-            {options.map((opt, index) => {
-              const isSelected = opt.value === selected;
-              const isFocused = focusedIndex === index;
-              return (
-                <li
-                  key={opt.value}
-                  id={`${id}-option-${opt.value}`}
-                  role="option"
-                  aria-selected={isSelected}
-                  aria-disabled={opt.disabled || undefined}
-                  className={[
-                    styles.option,
-                    isSelected ? styles.optionSelected : '',
-                    isFocused ? styles.optionFocused : '',
-                    opt.disabled ? styles.optionDisabled : '',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                  onClick={() => { if (!opt.disabled) selectOption(opt.value); }}
-                  onMouseEnter={() => setFocusedIndex(index)}
-                >
-                  <span className={styles.optionCheck} aria-hidden="true">
-                    {isSelected ? '✓' : ''}
-                  </span>
-                  <span className={styles.optionLabel}>{opt.label}</span>
-                </li>
-              );
-            })}
+            {filteredOptions.length === 0 ? (
+              <li className={styles.noOptions}>{noOptionsMessage}</li>
+            ) : (
+              filteredOptions.map((opt, index) => {
+                const isSelected = opt.value === selected;
+                const isFocused = focusedIndex === index;
+                return (
+                  <li
+                    key={opt.value}
+                    id={`${id}-option-${opt.value}`}
+                    role="option"
+                    aria-selected={isSelected}
+                    aria-disabled={opt.disabled || undefined}
+                    className={[
+                      styles.option,
+                      isSelected ? styles.optionSelected : '',
+                      isFocused ? styles.optionFocused : '',
+                      opt.disabled ? styles.optionDisabled : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    onClick={() => { if (!opt.disabled) selectOption(opt.value); }}
+                    onMouseEnter={() => setFocusedIndex(index)}
+                  >
+                    <span className={styles.optionCheck} aria-hidden="true">
+                      {isSelected ? '✓' : ''}
+                    </span>
+                    <span className={styles.optionLabel}>{opt.label}</span>
+                  </li>
+                );
+              })
+            )}
           </ul>
         </div>
       )}

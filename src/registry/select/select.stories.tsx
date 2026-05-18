@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within, expect, fn } from 'storybook/test';
 import { Select } from './index';
+import { CodeViewer } from '../../storybook/code-viewer';
+import indexSrc from './index.tsx?raw';
+import cssSrc from './select.module.css?raw';
 
 const COUNTRIES: { value: string; label: string; disabled?: boolean }[] = [
   { value: 'br', label: 'Brasil' },
@@ -26,8 +29,26 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Default state: trigger closed, placeholder visible. */
-export const Default: Story = {};
+/** Default state with source code viewer. */
+export const Default: Story = {
+  parameters: { layout: 'padded' },
+  render: (args) => (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '32px 0' }}>
+        <div style={{ width: '280px' }}>
+          <Select {...args} />
+        </div>
+      </div>
+      <CodeViewer
+        files={[
+          { name: 'index.tsx', content: indexSrc, language: 'tsx' },
+          { name: 'select.module.css', content: cssSrc, language: 'css' },
+        ]}
+        zipName="select"
+      />
+    </div>
+  ),
+};
 
 /** Pre-selected value via `value` prop (controlled mode). */
 export const WithPreselected: Story = {
@@ -153,6 +174,25 @@ export const WithLabelRequired: Story = {
 
     const combobox = canvas.getByRole('combobox');
     expect(combobox.getAttribute('aria-required')).toBe('true');
+  },
+};
+
+/** Type in search to filter options, then clear to restore all. */
+export const Searchable: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole('combobox'));
+
+    const searchInput = canvas.getByRole('searchbox');
+    await userEvent.type(searchInput, 'por');
+
+    const options = canvas.getAllByRole('option');
+    expect(options.length).toBe(1);
+    expect(options[0]).toHaveTextContent('Portugal');
+
+    await userEvent.clear(searchInput);
+    expect(canvas.getAllByRole('option').length).toBe(COUNTRIES.length);
   },
 };
 

@@ -27,6 +27,7 @@
   --sl-option-disabled-color: #9ca3af;
   --sl-option-check-width: 1.25rem;
 
+  --sl-search-padding: 0.5rem 0.75rem;
   --sl-placeholder-color: #6b6b6b;
   --sl-disabled-bg: #f9fafb;
   --sl-disabled-opacity: 0.6;
@@ -115,6 +116,36 @@
   box-shadow: var(--sl-dropdown-shadow);
   z-index: var(--sl-dropdown-z-index);
   overflow: hidden;
+}
+
+/* Search */
+
+.searchWrapper {
+  padding: var(--sl-search-padding);
+  border-bottom: var(--sl-border-width) solid var(--sl-border-color);
+}
+
+.searchInput {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  background: transparent;
+  box-sizing: border-box;
+  color: inherit;
+}
+
+.searchInput::placeholder {
+  color: var(--sl-placeholder-color);
+}
+
+.noOptions {
+  padding: var(--sl-option-padding);
+  color: var(--sl-option-disabled-color);
+  font-style: italic;
+  list-style: none;
+  text-align: center;
 }
 
 /* Listbox */
