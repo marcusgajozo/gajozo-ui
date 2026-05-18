@@ -14,8 +14,8 @@
   --sl-trigger-padding: 0.375rem 0.5rem;
 
   --sl-dropdown-bg: #ffffff;
-  --sl-dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --sl-dropdown-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --sl-dropdown-max-height: 16rem;
   --sl-dropdown-z-index: 50;
 
@@ -34,8 +34,6 @@
   --sl-chevron-color: #6b7280;
 }
 
-/* Container */
-
 .container {
   position: relative;
   display: block;
@@ -44,8 +42,6 @@
   font-size: var(--sl-font-size);
   box-sizing: border-box;
 }
-
-/* Trigger */
 
 .trigger {
   display: flex;
@@ -62,7 +58,9 @@
   gap: 0.25rem;
   text-align: left;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .trigger:focus-visible {
@@ -88,8 +86,6 @@
   color: var(--sl-placeholder-color);
 }
 
-/* Chevron */
-
 .chevron {
   display: inline-block;
   color: var(--sl-chevron-color);
@@ -103,8 +99,6 @@
   transform: rotate(180deg);
 }
 
-/* Dropdown */
-
 .dropdown {
   position: absolute;
   top: calc(100% + 4px);
@@ -117,8 +111,6 @@
   z-index: var(--sl-dropdown-z-index);
   overflow: hidden;
 }
-
-/* Search */
 
 .searchWrapper {
   padding: var(--sl-search-padding);
@@ -148,8 +140,6 @@
   text-align: center;
 }
 
-/* Listbox */
-
 .label {
   display: block;
   margin-bottom: 0.375rem;
@@ -172,8 +162,6 @@
   overflow-y: auto;
   outline: none;
 }
-
-/* Options */
 
 .option {
   display: flex;
@@ -216,16 +204,12 @@
   word-break: break-word;
 }
 
-/* Disabled state */
-
 .disabled .trigger {
   background: var(--sl-disabled-bg);
   opacity: var(--sl-disabled-opacity);
   cursor: not-allowed;
   pointer-events: none;
 }
-
-/* Mobile: bottom-sheet dropdown */
 
 @media (max-width: 640px) {
   .dropdown {
