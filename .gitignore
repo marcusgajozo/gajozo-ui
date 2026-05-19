@@ -1,6 +1,8 @@
 * 
 
 !.github
+!.husky
+!.husky/**/*
 !.github/**/*
 !.storybook
 !.storybook/**/*
@@ -8,8 +10,11 @@
 !src/**/*
 !.dockerignore
 !.gitignore
+!.lintstagedrc
 !.npmrc
 !.nvmrc
+!.prettierrc
+!commitlint.config.js
 !Dockerfile
 !eslint.config.js
 !index.html
