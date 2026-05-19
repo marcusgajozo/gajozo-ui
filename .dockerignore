@@ -1,7 +1,5 @@
 *
 
-!.github
-!.github/**/*
 !.storybook
 !.storybook/**/*
 !src

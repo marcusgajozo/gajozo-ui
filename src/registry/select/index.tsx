@@ -1,6 +1,7 @@
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-import type { KeyboardEvent } from 'react';
-import styles from './select.module.css';
+import type { KeyboardEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import styles from "./select.module.css";
 
 export interface Option {
   value: string;
@@ -21,8 +22,8 @@ export interface SelectProps {
   required?: boolean;
   searchPlaceholder?: string;
   noOptionsMessage?: string;
-  'aria-label'?: string;
-  'aria-labelledby'?: string;
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
 }
 
 interface UseSelectParams {
@@ -42,21 +43,21 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
 
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const listboxRef = useRef<HTMLUListElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const selectedOption = options.find(o => o.value === selected);
+  const selectedOption = options.find((o) => o.value === selected);
 
   const filteredOptions = useMemo(
     () =>
       options.filter(
-        o => !searchQuery || o.label.toLowerCase().includes(searchQuery.toLowerCase()),
+        (o) => !searchQuery || o.label.toLowerCase().includes(searchQuery.toLowerCase())
       ),
-    [options, searchQuery],
+    [options, searchQuery]
   );
 
   const close = useCallback(() => {
@@ -65,8 +66,8 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
   }, []);
 
   const open = useCallback(() => {
-    setSearchQuery('');
-    const idx = selected !== undefined ? options.findIndex(o => o.value === selected) : -1;
+    setSearchQuery("");
+    const idx = selected !== undefined ? options.findIndex((o) => o.value === selected) : -1;
     setFocusedIndex(idx);
     setIsOpen(true);
   }, [selected, options]);
@@ -78,8 +79,8 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
         close();
       }
     };
-    document.addEventListener('mousedown', handleMouseDown);
-    return () => document.removeEventListener('mousedown', handleMouseDown);
+    document.addEventListener("mousedown", handleMouseDown);
+    return () => document.removeEventListener("mousedown", handleMouseDown);
   }, [isOpen, close]);
 
   useEffect(() => {
@@ -90,10 +91,8 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
     if (focusedIndex < 0 || !listboxRef.current) return;
     const opt = filteredOptions[focusedIndex];
     if (!opt) return;
-    const el = listboxRef.current.querySelector<HTMLLIElement>(
-      `[id="${id}-option-${opt.value}"]`,
-    );
-    el?.scrollIntoView({ block: 'nearest' });
+    const el = listboxRef.current.querySelector<HTMLLIElement>(`[id="${id}-option-${opt.value}"]`);
+    el?.scrollIntoView({ block: "nearest" });
   }, [focusedIndex, filteredOptions, id]);
 
   const selectOption = useCallback(
@@ -103,53 +102,57 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
       close();
       triggerRef.current?.focus();
     },
-    [isControlled, onChange, close],
+    [isControlled, onChange, close]
   );
 
   const handleTriggerClick = useCallback(() => {
     if (!disabled) {
-      if (isOpen) close(); else open();
+      if (isOpen) close();
+      else open();
     }
   }, [disabled, isOpen, close, open]);
 
   const handleTriggerKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        if (!disabled) { if (isOpen) close(); else open(); }
-      } else if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && !isOpen) {
+        if (!disabled) {
+          if (isOpen) close();
+          else open();
+        }
+      } else if ((e.key === "ArrowDown" || e.key === "ArrowUp") && !isOpen) {
         e.preventDefault();
         if (!disabled) open();
-      } else if (e.key === 'Escape' && isOpen) {
+      } else if (e.key === "Escape" && isOpen) {
         e.preventDefault();
         close();
         triggerRef.current?.focus();
       }
     },
-    [disabled, isOpen, close, open],
+    [disabled, isOpen, close, open]
   );
 
   const handleSearchKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
       switch (e.key) {
-        case 'ArrowDown':
+        case "ArrowDown":
           e.preventDefault();
-          setFocusedIndex(prev => {
+          setFocusedIndex((prev) => {
             let next = prev + 1;
             while (next < filteredOptions.length && filteredOptions[next]?.disabled) next++;
             return next < filteredOptions.length ? next : prev;
           });
           break;
-        case 'ArrowUp':
+        case "ArrowUp":
           e.preventDefault();
-          setFocusedIndex(prev => {
+          setFocusedIndex((prev) => {
             let next = prev - 1;
             while (next >= 0 && filteredOptions[next]?.disabled) next--;
             return next >= 0 ? next : prev;
           });
           break;
-        case 'Enter':
-        case ' ': {
+        case "Enter":
+        case " ": {
           e.preventDefault();
           if (focusedIndex >= 0) {
             const opt = filteredOptions[focusedIndex];
@@ -157,17 +160,17 @@ function useSelect({ options, value, defaultValue, onChange, disabled }: UseSele
           }
           break;
         }
-        case 'Escape':
+        case "Escape":
           e.preventDefault();
           close();
           triggerRef.current?.focus();
           break;
-        case 'Tab':
+        case "Tab":
           close();
           break;
       }
     },
-    [filteredOptions, focusedIndex, selectOption, close],
+    [filteredOptions, focusedIndex, selectOption, close]
   );
 
   const focusedOptionId =
@@ -202,16 +205,16 @@ export function Select({
   value,
   defaultValue,
   onChange,
-  placeholder = 'Select...',
+  placeholder = "Select...",
   disabled = false,
   id: externalId,
   className,
   label,
   required = false,
-  searchPlaceholder = 'Buscar...',
-  noOptionsMessage = 'Nenhuma opção encontrada',
-  'aria-label': ariaLabel,
-  'aria-labelledby': ariaLabelledBy,
+  searchPlaceholder = "Buscar...",
+  noOptionsMessage = "Nenhuma opção encontrada",
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
 }: SelectProps) {
   const {
     id,
@@ -239,14 +242,18 @@ export function Select({
   return (
     <div
       ref={containerRef}
-      className={[styles.container, disabled ? styles.disabled : '', className ?? '']
+      className={[styles.container, disabled ? styles.disabled : "", className ?? ""]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     >
       {label && (
         <label id={`${id}-label`} className={styles.label}>
           {label}
-          {required && <span aria-hidden="true" className={styles.required}>*</span>}
+          {required && (
+            <span aria-hidden="true" className={styles.required}>
+              *
+            </span>
+          )}
         </label>
       )}
       <div
@@ -261,7 +268,7 @@ export function Select({
         aria-required={required || undefined}
         aria-label={effectiveLabelledBy ? undefined : (ariaLabel ?? placeholder)}
         aria-labelledby={effectiveLabelledBy}
-        className={[styles.trigger, isOpen ? styles.triggerOpen : ''].filter(Boolean).join(' ')}
+        className={[styles.trigger, isOpen ? styles.triggerOpen : ""].filter(Boolean).join(" ")}
         onClick={handleTriggerClick}
         onKeyDown={handleTriggerKeyDown}
       >
@@ -273,7 +280,7 @@ export function Select({
           )}
         </span>
         <span
-          className={[styles.chevron, isOpen ? styles.chevronUp : ''].filter(Boolean).join(' ')}
+          className={[styles.chevron, isOpen ? styles.chevronUp : ""].filter(Boolean).join(" ")}
           aria-hidden="true"
         >
           ▾
@@ -290,7 +297,7 @@ export function Select({
               className={styles.searchInput}
               placeholder={searchPlaceholder}
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleSearchKeyDown}
               aria-label="Pesquisar opções"
               aria-autocomplete="list"
@@ -321,17 +328,19 @@ export function Select({
                     aria-disabled={opt.disabled || undefined}
                     className={[
                       styles.option,
-                      isSelected ? styles.optionSelected : '',
-                      isFocused ? styles.optionFocused : '',
-                      opt.disabled ? styles.optionDisabled : '',
+                      isSelected ? styles.optionSelected : "",
+                      isFocused ? styles.optionFocused : "",
+                      opt.disabled ? styles.optionDisabled : "",
                     ]
                       .filter(Boolean)
-                      .join(' ')}
-                    onClick={() => { if (!opt.disabled) selectOption(opt.value); }}
+                      .join(" ")}
+                    onClick={() => {
+                      if (!opt.disabled) selectOption(opt.value);
+                    }}
                     onMouseEnter={() => setFocusedIndex(index)}
                   >
                     <span className={styles.optionCheck} aria-hidden="true">
-                      {isSelected ? '✓' : ''}
+                      {isSelected ? "✓" : ""}
                     </span>
                     <span className={styles.optionLabel}>{opt.label}</span>
                   </li>

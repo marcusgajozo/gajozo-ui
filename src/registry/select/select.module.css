@@ -14,8 +14,7 @@
   --sl-trigger-padding: 0.375rem 0.5rem;
 
   --sl-dropdown-bg: #ffffff;
-  --sl-dropdown-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --sl-dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --sl-dropdown-max-height: 16rem;
   --sl-dropdown-z-index: 50;
 

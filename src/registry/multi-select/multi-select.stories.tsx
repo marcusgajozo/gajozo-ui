@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { userEvent, within, expect, fn } from "storybook/test";
-import { MultiSelect } from "./index";
+import { expect, fn, userEvent, within } from "storybook/test";
+
 import { CodeViewer } from "../../storybook/code-viewer";
+import { MultiSelect } from "./index";
 import indexSrc from "./index.tsx?raw";
 import cssSrc from "./multi-select.module.css?raw";
 
@@ -33,9 +34,7 @@ export const Default: Story = {
   parameters: { layout: "padded" },
   render: (args) => (
     <div>
-      <div
-        style={{ display: "flex", justifyContent: "center", padding: "32px 0" }}
-      >
+      <div style={{ display: "flex", justifyContent: "center", padding: "32px 0" }}>
         <div style={{ width: "320px" }}>
           <MultiSelect {...args} />
         </div>
@@ -151,8 +150,7 @@ export const FixedWidth: Story = {
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const container =
-      canvasElement.querySelector('[role="combobox"]')!.parentElement!;
+    const container = canvasElement.querySelector('[role="combobox"]')!.parentElement!;
     const widthBefore = container.getBoundingClientRect().width;
 
     await userEvent.click(canvas.getByRole("combobox"));

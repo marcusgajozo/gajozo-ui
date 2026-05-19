@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import type { KeyboardEvent, MouseEvent } from 'react';
-import styles from './multi-select.module.css';
+import type { KeyboardEvent, MouseEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import styles from "./multi-select.module.css";
 
 export interface Option {
   value: string;
@@ -22,8 +23,8 @@ export interface MultiSelectProps {
   searchPlaceholder?: string;
   noOptionsMessage?: string;
   maxSelected?: number;
-  'aria-label'?: string;
-  'aria-labelledby'?: string;
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
 }
 
 interface UseMultiSelectParams {
@@ -49,11 +50,11 @@ function useMultiSelect({
   const [internalSelected, setInternalSelected] = useState<string[]>(defaultValue ?? []);
   const selected = useMemo(
     () => (isControlled ? (value ?? []) : internalSelected),
-    [isControlled, value, internalSelected],
+    [isControlled, value, internalSelected]
   );
 
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -61,14 +62,14 @@ function useMultiSelect({
   const searchRef = useRef<HTMLInputElement>(null);
   const listboxRef = useRef<HTMLUListElement>(null);
 
-  const filteredOptions = options.filter(opt =>
-    opt.label.toLowerCase().includes(searchQuery.toLowerCase()),
+  const filteredOptions = options.filter((opt) =>
+    opt.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
   const isAtMax = maxSelected !== undefined && selected.length >= maxSelected;
 
   const close = useCallback(() => {
     setIsOpen(false);
-    setSearchQuery('');
+    setSearchQuery("");
     setFocusedIndex(-1);
   }, []);
 
@@ -79,8 +80,8 @@ function useMultiSelect({
         close();
       }
     };
-    document.addEventListener('mousedown', handleMouseDown);
-    return () => document.removeEventListener('mousedown', handleMouseDown);
+    document.addEventListener("mousedown", handleMouseDown);
+    return () => document.removeEventListener("mousedown", handleMouseDown);
   }, [isOpen, close]);
 
   useEffect(() => {
@@ -92,7 +93,7 @@ function useMultiSelect({
     const opt = filteredOptions[focusedIndex];
     if (!opt) return;
     const el = listboxRef.current.querySelector<HTMLLIElement>(`[id="${id}-option-${opt.value}"]`);
-    el?.scrollIntoView({ block: 'nearest' });
+    el?.scrollIntoView({ block: "nearest" });
   }, [focusedIndex, filteredOptions, id]);
 
   const updateSelected = useCallback(
@@ -100,16 +101,16 @@ function useMultiSelect({
       if (!isControlled) setInternalSelected(next);
       onChange?.(next);
     },
-    [isControlled, onChange],
+    [isControlled, onChange]
   );
 
   const toggleOption = useCallback(
     (optValue: string) => {
       const isSelected = selected.includes(optValue);
       if (!isSelected && isAtMax) return;
-      updateSelected(isSelected ? selected.filter(v => v !== optValue) : [...selected, optValue]);
+      updateSelected(isSelected ? selected.filter((v) => v !== optValue) : [...selected, optValue]);
     },
-    [selected, isAtMax, updateSelected],
+    [selected, isAtMax, updateSelected]
   );
 
   const clearAll = useCallback(() => updateSelected([]), [updateSelected]);
@@ -119,7 +120,7 @@ function useMultiSelect({
       e.stopPropagation();
       toggleOption(optValue);
     },
-    [toggleOption],
+    [toggleOption]
   );
 
   const updateSearch = useCallback((query: string) => {
@@ -128,38 +129,38 @@ function useMultiSelect({
   }, []);
 
   const handleTriggerClick = useCallback(() => {
-    if (!disabled) setIsOpen(prev => !prev);
+    if (!disabled) setIsOpen((prev) => !prev);
   }, [disabled]);
 
   const handleTriggerKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        if (!disabled) setIsOpen(prev => !prev);
-      } else if (e.key === 'ArrowDown' && !isOpen) {
+        if (!disabled) setIsOpen((prev) => !prev);
+      } else if (e.key === "ArrowDown" && !isOpen) {
         e.preventDefault();
         if (!disabled) setIsOpen(true);
-      } else if (e.key === 'Escape' && isOpen) {
+      } else if (e.key === "Escape" && isOpen) {
         e.preventDefault();
         close();
       }
     },
-    [disabled, isOpen, close],
+    [disabled, isOpen, close]
   );
 
   const handleSearchKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
       switch (e.key) {
-        case 'ArrowDown':
+        case "ArrowDown":
           e.preventDefault();
-          setFocusedIndex(prev => (prev < filteredOptions.length - 1 ? prev + 1 : prev));
+          setFocusedIndex((prev) => (prev < filteredOptions.length - 1 ? prev + 1 : prev));
           break;
-        case 'ArrowUp':
+        case "ArrowUp":
           e.preventDefault();
-          setFocusedIndex(prev => (prev > 0 ? prev - 1 : 0));
+          setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
           break;
-        case 'Enter':
-        case ' ': {
+        case "Enter":
+        case " ": {
           if (focusedIndex >= 0) {
             const opt = filteredOptions[focusedIndex];
             if (opt && !opt.disabled) {
@@ -169,17 +170,17 @@ function useMultiSelect({
           }
           break;
         }
-        case 'Escape':
+        case "Escape":
           e.preventDefault();
           close();
           triggerRef.current?.focus();
           break;
-        case 'Tab':
+        case "Tab":
           close();
           break;
       }
     },
-    [filteredOptions, focusedIndex, toggleOption, close],
+    [filteredOptions, focusedIndex, toggleOption, close]
   );
 
   const focusedOptionId =
@@ -216,17 +217,17 @@ export function MultiSelect({
   value,
   defaultValue,
   onChange,
-  placeholder = 'Select...',
+  placeholder = "Select...",
   disabled = false,
   id: externalId,
   className,
   label,
   required = false,
-  searchPlaceholder = 'Search...',
-  noOptionsMessage = 'No options found',
+  searchPlaceholder = "Search...",
+  noOptionsMessage = "No options found",
   maxSelected,
-  'aria-label': ariaLabel,
-  'aria-labelledby': ariaLabelledBy,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
 }: MultiSelectProps) {
   const {
     id,
@@ -256,14 +257,18 @@ export function MultiSelect({
   return (
     <div
       ref={containerRef}
-      className={[styles.container, disabled ? styles.disabled : '', className ?? '']
+      className={[styles.container, disabled ? styles.disabled : "", className ?? ""]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     >
       {label && (
         <label id={`${id}-label`} className={styles.label}>
           {label}
-          {required && <span aria-hidden="true" className={styles.required}>*</span>}
+          {required && (
+            <span aria-hidden="true" className={styles.required}>
+              *
+            </span>
+          )}
         </label>
       )}
       <div
@@ -278,16 +283,14 @@ export function MultiSelect({
         aria-required={required || undefined}
         aria-label={effectiveLabelledBy ? undefined : (ariaLabel ?? placeholder)}
         aria-labelledby={effectiveLabelledBy}
-        className={[styles.trigger, isOpen ? styles.triggerOpen : ''].filter(Boolean).join(' ')}
+        className={[styles.trigger, isOpen ? styles.triggerOpen : ""].filter(Boolean).join(" ")}
         onClick={handleTriggerClick}
         onKeyDown={handleTriggerKeyDown}
       >
         <div className={styles.chipArea}>
-          {selected.length === 0 && (
-            <span className={styles.placeholder}>{placeholder}</span>
-          )}
-          {selected.map(val => {
-            const opt = options.find(o => o.value === val);
+          {selected.length === 0 && <span className={styles.placeholder}>{placeholder}</span>}
+          {selected.map((val) => {
+            const opt = options.find((o) => o.value === val);
             if (!opt) return null;
             return (
               <span key={val} className={styles.chip}>
@@ -296,7 +299,7 @@ export function MultiSelect({
                   type="button"
                   aria-label={`Remove ${opt.label}`}
                   className={styles.chipRemove}
-                  onClick={e => removeChip(val, e)}
+                  onClick={(e) => removeChip(val, e)}
                   tabIndex={-1}
                 >
                   ×
@@ -312,14 +315,17 @@ export function MultiSelect({
               type="button"
               aria-label="Clear all"
               className={styles.clearAll}
-              onClick={e => { e.stopPropagation(); clearAll(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                clearAll();
+              }}
               tabIndex={-1}
             >
               ×
             </button>
           )}
           <svg
-            className={[styles.chevron, isOpen ? styles.chevronUp : ''].filter(Boolean).join(' ')}
+            className={[styles.chevron, isOpen ? styles.chevronUp : ""].filter(Boolean).join(" ")}
             aria-hidden="true"
             width="12"
             height="12"
@@ -336,7 +342,9 @@ export function MultiSelect({
       </div>
 
       <div
-        className={[styles.dropdown, !isOpen ? styles.dropdownHidden : ''].filter(Boolean).join(' ')}
+        className={[styles.dropdown, !isOpen ? styles.dropdownHidden : ""]
+          .filter(Boolean)
+          .join(" ")}
         role="presentation"
         aria-hidden={!isOpen}
       >
@@ -349,7 +357,7 @@ export function MultiSelect({
             aria-controls={`${id}-listbox`}
             aria-activedescendant={focusedOptionId}
             value={searchQuery}
-            onChange={e => updateSearch(e.target.value)}
+            onChange={(e) => updateSearch(e.target.value)}
             onKeyDown={handleSearchKeyDown}
             placeholder={searchPlaceholder}
             className={styles.searchInput}
@@ -383,18 +391,20 @@ export function MultiSelect({
                   aria-disabled={isDisabledOption || undefined}
                   className={[
                     styles.option,
-                    isSelected ? styles.optionSelected : '',
-                    isFocused ? styles.optionFocused : '',
-                    isDisabledOption ? styles.optionDisabled : '',
+                    isSelected ? styles.optionSelected : "",
+                    isFocused ? styles.optionFocused : "",
+                    isDisabledOption ? styles.optionDisabled : "",
                   ]
                     .filter(Boolean)
-                    .join(' ')}
-                  onMouseDown={e => e.preventDefault()}
-                  onClick={() => { if (!isDisabledOption) toggleOption(opt.value); }}
+                    .join(" ")}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => {
+                    if (!isDisabledOption) toggleOption(opt.value);
+                  }}
                   onMouseEnter={() => setFocusedIndex(index)}
                 >
                   <span className={styles.optionCheck} aria-hidden="true">
-                    {isSelected ? '✓' : ''}
+                    {isSelected ? "✓" : ""}
                   </span>
                   <span className={styles.optionLabel}>{opt.label}</span>
                 </li>

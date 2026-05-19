@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { userEvent, within, expect, fn } from "storybook/test";
-import { Select } from "./index";
+import { expect, fn, userEvent, within } from "storybook/test";
+
 import { CodeViewer } from "../../storybook/code-viewer";
+import { Select } from "./index";
 import indexSrc from "./index.tsx?raw";
 import cssSrc from "./select.module.css?raw";
 
@@ -33,9 +34,7 @@ export const Default: Story = {
   parameters: { layout: "padded" },
   render: (args) => (
     <div>
-      <div
-        style={{ display: "flex", justifyContent: "center", padding: "32px 0" }}
-      >
+      <div style={{ display: "flex", justifyContent: "center", padding: "32px 0" }}>
         <div style={{ width: "280px" }}>
           <Select {...args} />
         </div>
@@ -107,9 +106,7 @@ export const EscapeClosesWithoutSelecting: Story = {
     await userEvent.keyboard("{Escape}");
 
     expect(canvas.queryByRole("listbox")).toBeNull();
-    expect(canvas.getByRole("combobox")).toHaveTextContent(
-      "Selecione um país...",
-    );
+    expect(canvas.getByRole("combobox")).toHaveTextContent("Selecione um país...");
   },
 };
 
@@ -123,8 +120,7 @@ export const FixedWidth: Story = {
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const container =
-      canvasElement.querySelector('[role="combobox"]')!.parentElement!;
+    const container = canvasElement.querySelector('[role="combobox"]')!.parentElement!;
     const widthBefore = container.getBoundingClientRect().width;
 
     await userEvent.click(canvas.getByRole("combobox"));
@@ -201,8 +197,6 @@ export const DisabledOption: Story = {
     expect(disabledOption.getAttribute("aria-disabled")).toBe("true");
 
     await userEvent.click(disabledOption);
-    expect(canvas.getByRole("combobox")).toHaveTextContent(
-      "Selecione um país...",
-    );
+    expect(canvas.getByRole("combobox")).toHaveTextContent("Selecione um país...");
   },
 };

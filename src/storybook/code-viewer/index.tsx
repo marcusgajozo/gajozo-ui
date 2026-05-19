@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { SyntaxHighlighter } from 'storybook/internal/components';
-import type { SupportedLanguage } from 'storybook/internal/components';
-import { ThemeProvider, themes, ensure } from 'storybook/theming';
-
+import React, { useState } from "react";
+import type { SupportedLanguage } from "storybook/internal/components";
+import { SyntaxHighlighter } from "storybook/internal/components";
+import { ensure, ThemeProvider, themes } from "storybook/theming";
+// teste
 export interface CodeFile {
   name: string;
   content: string;
@@ -114,16 +114,16 @@ function buildZip(files: CodeFile[]): Uint8Array<ArrayBuffer> {
 
 function actionBtnStyle(active: boolean): React.CSSProperties {
   return {
-    padding: '4px 10px',
-    border: '1px solid #d0d7de',
-    borderRadius: '6px',
-    background: active ? '#d1fae5' : '#f6f8fa',
-    color: active ? '#065f46' : '#24292f',
-    cursor: 'pointer',
-    fontSize: '12px',
-    fontFamily: 'inherit',
-    whiteSpace: 'nowrap',
-    transition: 'background 0.15s',
+    padding: "4px 10px",
+    border: "1px solid #d0d7de",
+    borderRadius: "6px",
+    background: active ? "#d1fae5" : "#f6f8fa",
+    color: active ? "#065f46" : "#24292f",
+    cursor: "pointer",
+    fontSize: "12px",
+    fontFamily: "inherit",
+    whiteSpace: "nowrap",
+    transition: "background 0.15s",
   };
 }
 
@@ -140,9 +140,9 @@ export function CodeViewer({ files, zipName }: Props) {
 
   function download() {
     const zip = buildZip(files);
-    const blob = new Blob([zip], { type: 'application/zip' });
+    const blob = new Blob([zip], { type: "application/zip" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = `${zipName}.zip`;
     a.click();
@@ -150,40 +150,40 @@ export function CodeViewer({ files, zipName }: Props) {
   }
 
   return (
-    <div style={{ borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(0,0,0,.12)' }}>
+    <div style={{ borderRadius: "6px", overflow: "hidden", border: "1px solid rgba(0,0,0,.12)" }}>
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          background: '#f6f8fa',
-          borderBottom: '1px solid rgba(0,0,0,.1)',
+          display: "flex",
+          alignItems: "center",
+          background: "#f6f8fa",
+          borderBottom: "1px solid rgba(0,0,0,.1)",
         }}
       >
-        <div style={{ display: 'flex', flex: 1 }}>
+        <div style={{ display: "flex", flex: 1 }}>
           {files.map((f, i) => (
             <button
               key={f.name}
               onClick={() => setTab(i)}
               style={{
-                padding: '8px 16px',
-                border: 'none',
-                borderBottom: i === tab ? '2px solid #0969da' : '2px solid transparent',
-                background: 'transparent',
-                cursor: 'pointer',
-                fontFamily: 'ui-monospace, SFMono-Regular, SF Mono, Consolas, monospace',
-                fontSize: '12px',
+                padding: "8px 16px",
+                border: "none",
+                borderBottom: i === tab ? "2px solid #0969da" : "2px solid transparent",
+                background: "transparent",
+                cursor: "pointer",
+                fontFamily: "ui-monospace, SFMono-Regular, SF Mono, Consolas, monospace",
+                fontSize: "12px",
                 fontWeight: i === tab ? 600 : 400,
-                color: i === tab ? '#0969da' : '#656d76',
-                transition: 'color 0.15s',
+                color: i === tab ? "#0969da" : "#656d76",
+                transition: "color 0.15s",
               }}
             >
               {f.name}
             </button>
           ))}
         </div>
-        <div style={{ display: 'flex', gap: '6px', padding: '4px 8px' }}>
+        <div style={{ display: "flex", gap: "6px", padding: "4px 8px" }}>
           <button onClick={() => void copy()} style={actionBtnStyle(copied)}>
-            {copied ? '✓ Copiado' : 'Copiar'}
+            {copied ? "✓ Copiado" : "Copiar"}
           </button>
           <button onClick={download} style={actionBtnStyle(false)}>
             ↓ Baixar ZIP
