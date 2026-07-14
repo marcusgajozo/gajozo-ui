@@ -1,0 +1,117 @@
+.dropdownHidden {
+  display: none;
+}
+
+.dropdown {
+  width: var(--anchor-width);
+  background: var(--ms-dropdown-bg);
+  border: var(--ms-border-width) solid var(--ms-border-color);
+  border-radius: var(--ms-border-radius);
+  box-shadow: var(--ms-dropdown-shadow);
+  z-index: var(--ms-dropdown-z-index);
+  overflow: hidden;
+  font-family: var(--ms-font-family);
+  font-size: var(--ms-font-size);
+}
+
+.listbox {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: var(--ms-dropdown-max-height);
+  overflow-y: auto;
+  outline: none;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  padding: var(--ms-option-padding);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.1s ease;
+}
+
+.option[data-selected] {
+  background: var(--ms-option-selected-bg);
+  color: var(--ms-option-selected-color);
+}
+
+.option[data-highlighted] {
+  background: var(--ms-option-hover-bg);
+  outline: none;
+}
+
+.option[data-disabled] {
+  color: var(--ms-option-disabled-color);
+  cursor: not-allowed;
+}
+
+.checkbox {
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--ms-border-color);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  background: transparent;
+  color: transparent;
+}
+
+.option[data-selected] .checkbox:not(.checkboxUnselected),
+.checkbox[data-state="checked"],
+.checkbox[data-state="indeterminate"] {
+  background: var(--ms-focus-ring-color);
+  border-color: var(--ms-focus-ring-color);
+  color: var(--ms-checkbox-check-color);
+}
+
+.option[data-selected] .checkboxUnselected {
+  display: none;
+}
+
+.selectAllOption {
+  border-bottom: 1px solid var(--ms-border-color);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.optionLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noOptions {
+  padding: var(--ms-option-padding);
+  color: var(--ms-placeholder-color);
+  font-style: italic;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .dropdown {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: var(--ms-border-radius) var(--ms-border-radius) 0 0;
+    max-height: 60vh;
+  }
+
+  .listbox {
+    max-height: calc(60vh - 3.5rem);
+  }
+
+  .option {
+    padding: 0.75rem 1rem;
+    min-height: 44px;
+  }
+}

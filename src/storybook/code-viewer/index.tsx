@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import type { SupportedLanguage } from "storybook/internal/components";
 import { SyntaxHighlighter } from "storybook/internal/components";
 import { ensure, ThemeProvider, themes } from "storybook/theming";
-// teste
+
 export interface CodeFile {
   name: string;
   content: string;

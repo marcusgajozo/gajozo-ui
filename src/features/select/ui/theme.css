@@ -1,0 +1,44 @@
+:root {
+  /* Cor primária base - Altere apenas esta variável para mudar todo o tema */
+  --sl-primary-color: #0c5217;
+
+  /* Cor base dos textos - Altere esta variável para mudar os textos (ícones, placeholders, labels) */
+  --sl-text-color: #374151;
+
+  --sl-font-family: system-ui, -apple-system, sans-serif;
+  --sl-font-size: 0.875rem;
+
+  --sl-border-color: #d1d5db;
+  --sl-border-radius: 0.375rem;
+  --sl-border-width: 1px;
+
+  /* Cores derivadas da primária usando color-mix */
+  --sl-focus-ring-color: var(--sl-primary-color);
+  --sl-focus-ring-width: 2px;
+
+  --sl-trigger-bg: #ffffff;
+  --sl-trigger-min-height: 2.5rem;
+  --sl-trigger-padding: 0.375rem 0.5rem;
+
+  --sl-dropdown-bg: #ffffff;
+  --sl-dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --sl-dropdown-max-height: 16rem;
+  --sl-dropdown-z-index: 50;
+
+  --sl-option-padding: 0.5rem 0.75rem;
+  --sl-option-hover-bg: color-mix(in srgb, var(--sl-primary-color) 25%, transparent);
+  --sl-option-selected-bg: color-mix(in srgb, var(--sl-primary-color) 10%, transparent);
+  --sl-option-selected-color: color-mix(in srgb, var(--sl-primary-color) 90%, black);
+  --sl-option-focused-bg: color-mix(in srgb, var(--sl-primary-color) 15%, transparent);
+  --sl-option-disabled-color: color-mix(in srgb, var(--sl-text-color) 50%, transparent);
+  --sl-option-check-width: 1.25rem;
+
+  --sl-search-padding: 0.5rem 0.75rem;
+  --sl-placeholder-color: color-mix(in srgb, var(--sl-text-color) 60%, transparent);
+  --sl-disabled-bg: #f9fafb;
+  --sl-disabled-opacity: 0.6;
+  --sl-chevron-color: color-mix(in srgb, var(--sl-text-color) 70%, transparent);
+
+  --sl-label-color: var(--sl-text-color);
+  --sl-required-color: var(--sl-text-color);
+}

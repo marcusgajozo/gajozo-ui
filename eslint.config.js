@@ -9,6 +9,35 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import unusedImports from "eslint-plugin-unused-imports";
 
+const localPlugin = {
+  rules: {
+    "no-comments": {
+      create(context) {
+        return {
+          Program() {
+            const sourceCode = context.sourceCode || context.getSourceCode();
+            const comments = sourceCode.getAllComments();
+            comments.forEach((comment) => {
+              const text = comment.value.trim();
+              if (
+                text.startsWith("eslint") ||
+                text.startsWith("TODO") ||
+                text.includes("TODO") ||
+                text.startsWith("/")
+              )
+                return;
+              context.report({
+                loc: comment.loc,
+                message: "Comentários no código geram um aviso.",
+              });
+            });
+          },
+        };
+      },
+    },
+  },
+};
+
 export default defineConfig([
   globalIgnores(["dist"]),
   {
@@ -16,6 +45,7 @@ export default defineConfig([
     plugins: {
       "simple-import-sort": simpleImportSort,
       "unused-imports": unusedImports,
+      local: localPlugin,
     },
     extends: [
       js.configs.recommended,
@@ -36,7 +66,7 @@ export default defineConfig([
         { vars: "all", varsIgnorePattern: "^_", args: "after-used", argsIgnorePattern: "^_" },
       ],
       "no-console": "error",
-      "no-warning-comments": ["warn", { terms: ["fixme", "hack", "xxx"], location: "anywhere" }],
+      "local/no-comments": "warn",
     },
   },
   ...storybook.configs["flat/recommended"],

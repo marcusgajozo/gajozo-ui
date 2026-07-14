@@ -1,0 +1,91 @@
+.triggerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--sl-trigger-min-height);
+  padding: var(--sl-trigger-padding);
+  background: var(--sl-trigger-bg);
+  border: var(--sl-border-width) solid var(--sl-border-color);
+  border-radius: var(--sl-border-radius);
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 0.25rem;
+  text-align: left;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.triggerWrapper:focus-within {
+  border-color: var(--sl-focus-ring-color);
+  box-shadow: 0 0 0 var(--sl-focus-ring-width)
+    color-mix(in srgb, var(--sl-focus-ring-color) 30%, transparent);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sl-placeholder-color);
+  flex-shrink: 0;
+}
+
+.chevronButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.triggerLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.placeholder {
+  color: var(--sl-placeholder-color);
+}
+
+.chevron {
+  display: inline-block;
+  color: var(--sl-chevron-color);
+  transition: transform 0.15s ease;
+  font-size: 0.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
+
+.disabled .triggerWrapper {
+  background: var(--sl-disabled-bg);
+  opacity: var(--sl-disabled-opacity);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.searchInputTrigger {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.searchInputTrigger::placeholder {
+  color: var(--sl-placeholder-color);
+}

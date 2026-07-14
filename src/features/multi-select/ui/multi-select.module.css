@@ -1,0 +1,27 @@
+.container {
+  position: relative;
+  display: block;
+  width: 100%;
+  font-family: var(--ms-font-family);
+  font-size: var(--ms-font-size);
+  box-sizing: border-box;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: var(--ms-font-size);
+  font-family: var(--ms-font-family);
+  color: var(--ms-label-color);
+  cursor: default;
+}
+
+.required {
+  color: var(--ms-required-color);
+  margin-left: 0.125rem;
+}
+
+.disabled {
+  opacity: var(--ms-disabled-opacity);
+  cursor: not-allowed;
+}

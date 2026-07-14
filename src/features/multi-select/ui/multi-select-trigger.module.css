@@ -1,0 +1,180 @@
+.triggerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--ms-trigger-min-height);
+  padding: var(--ms-trigger-padding);
+  background: var(--ms-trigger-bg);
+  border: var(--ms-border-width) solid var(--ms-border-color);
+  border-radius: var(--ms-border-radius);
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 0.25rem;
+  text-align: left;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.triggerWrapper:focus-within {
+  border-color: var(--ms-focus-ring-color);
+  box-shadow: 0 0 0 var(--ms-focus-ring-width)
+    color-mix(in srgb, var(--ms-focus-ring-color) 30%, transparent);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ms-placeholder-color);
+  flex-shrink: 0;
+}
+
+.chevronButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.chipArea {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.measureLayer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.4rem;
+  height: 24px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--ms-disabled-bg);
+  color: var(--ms-placeholder-color);
+  border-radius: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.placeholder {
+  color: var(--ms-placeholder-color);
+  line-height: 1.5;
+}
+
+.chipText {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ms-text-color, inherit);
+  max-width: 100%;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  flex-shrink: 1;
+  min-width: 0;
+  white-space: pre; /* Preserve space after comma */
+}
+
+.chipLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.clearAll {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ms-clear-color);
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.1s ease;
+}
+
+.clearAll:hover {
+  opacity: 1;
+}
+
+.clearAll:focus-visible {
+  outline: var(--ms-focus-ring-width) solid var(--ms-focus-ring-color);
+  outline-offset: 1px;
+  opacity: 1;
+}
+
+.chevron {
+  display: inline-block;
+  color: var(--ms-chevron-color);
+  transition: transform 0.15s ease;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 640px) {
+  .clearAll {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+.searchInputTrigger {
+  flex: 1;
+  min-width: 60px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.searchInputTrigger::placeholder {
+  color: var(--ms-placeholder-color);
+}
+
+.disabled .triggerWrapper {
+  background: var(--ms-disabled-bg);
+  opacity: var(--ms-disabled-opacity);
+  cursor: not-allowed;
+  pointer-events: none;
+}
