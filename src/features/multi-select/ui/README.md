@@ -1,30 +1,30 @@
-# MultiSelect Component
+# Componente MultiSelect
 
-A custom MultiSelect component built using `@base-ui/react`'s Combobox primitive. It supports search filtering out of the box, full keyboard accessibility, and uses standard CSS modules for styling.
+Um componente customizado de seleção múltipla (MultiSelect) construído usando a primitiva Combobox do `@base-ui/react`. Ele suporta filtro de busca por padrão, acessibilidade total via teclado e utiliza CSS modules padrão para estilização.
 
-## Installation
+## Instalação
 
-1. Make sure you have `@base-ui/react` installed in your project:
+1. Certifique-se de que você tem o `@base-ui/react` instalado no seu projeto:
    ```bash
    pnpm add @base-ui/react
    ```
-2. Copy the entire `multi-select` folder into your project (e.g., `src/components/multi-select`).
+2. Copie a pasta inteira `multi-select` para o seu projeto (ex: `src/features/multi-select`).
 
-## Structure
+## Estrutura
 
-- `index.ts`: Export file.
-- `multi-select.tsx`: Main component file.
-- `multi-select-trigger.tsx`: Subcomponent for the trigger button and chips.
-- `multi-select-dropdown.tsx`: Subcomponent for the dropdown/popup menu and search.
-- `theme.css`: **Design API!** Contains all design tokens (CSS variables) for the component. Edit this file to easily customize colors, borders, typography, etc.
-- `multi-select.module.css`: Base structural styles (container, label).
-- `multi-select-trigger.module.css`: Structural styles specific to the trigger.
-- `multi-select-dropdown.module.css`: Structural styles specific to the dropdown.
+- `index.ts`: Arquivo de exportação (API pública).
+- `multi-select.tsx`: Arquivo principal do componente.
+- `multi-select-trigger.tsx`: Subcomponente responsável pelo botão de gatilho e exibição das opções selecionadas (chips).
+- `multi-select-dropdown.tsx`: Subcomponente responsável pelo menu suspenso (popup) e campo de busca.
+- `theme.css`: **API de Design!** Contém todos os tokens de design (variáveis CSS) para o componente. Edite este arquivo para customizar cores, bordas, tipografia, etc. facilmente.
+- `multi-select.module.css`: Estilos estruturais base (contêiner, rótulo).
+- `multi-select-trigger.module.css`: Estilos estruturais específicos do gatilho (trigger).
+- `multi-select-dropdown.module.css`: Estilos estruturais específicos do menu suspenso (dropdown).
 
-## Usage
+## Como Usar
 
 ```tsx
-import { MultiSelect } from "./multi-select";
+import { MultiSelect } from "@/features/multi-select/ui";
 
 const options = [
   { value: "react", label: "React" },
@@ -35,7 +35,7 @@ const options = [
 export function MyForm() {
   return (
     <MultiSelect
-      label="Choose frameworks"
+      label="Escolha os frameworks"
       options={options}
       onChange={(value) => console.log(value)}
       maxSelected={2}

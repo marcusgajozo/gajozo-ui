@@ -41,6 +41,28 @@ describe("Modal Component", () => {
     });
   });
 
+  test("Escape key is blocked when hideCloseIcon is true", async () => {
+    const user = userEvent.setup();
+    render(
+      <Modal.Root>
+        <Modal.Trigger>Open Modal</Modal.Trigger>
+        <Modal.Popup hideCloseIcon>
+          <Modal.Title>No Close Icon</Modal.Title>
+          <Modal.Body>
+            <Modal.Description>This modal blocks Escape.</Modal.Description>
+          </Modal.Body>
+        </Modal.Popup>
+      </Modal.Root>
+    );
+
+    await user.click(screen.getByText("Open Modal"));
+    expect(screen.getByText("No Close Icon")).toBeTruthy();
+
+    await user.keyboard("{Escape}");
+
+    expect(screen.getByText("No Close Icon")).toBeTruthy();
+  });
+
   test("Zustand store integration", async () => {
     const TestComponent = () => {
       const modal = useModal<{ id: number }>("test-modal");

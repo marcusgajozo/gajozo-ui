@@ -1,65 +1,65 @@
-# Reusable UI Components
+# Componentes de UI Reutilizáveis
 
-A copy-paste React component library. No npm package, no framework lock-in — just copy the component folder into your project.
+Uma biblioteca de componentes React estilo copiar-colar. Sem pacotes npm, sem dependência rígida de frameworks — apenas copie a pasta do componente para o seu projeto.
 
-## Philosophy
+## Filosofia
 
-- **Copy-paste:** Each component is a self-contained folder with an `index.tsx` and a `*.module.css`. Copy it, use it.
-- **Zero runtime deps:** Components depend only on React and headless utilities (like `@base-ui/react`). No heavy UI libraries, no shared utilities, no CSS-in-JS runtime.
-- **Accessible:** WAI-ARIA patterns, full keyboard navigation, and focus management included out of the box.
-- **Themeable:** CSS Modules alongside custom properties for easy design token overrides.
-- **Composition:** We use the composition pattern to keep your UI adaptable.
+- **Copiar-colar:** Cada componente é uma pasta autônoma com um `index.tsx` e um `*.module.css`. Copie-o, use-o.
+- **Zero dependências de execução (runtime):** Os componentes dependem apenas do React e utilitários headless (como `@base-ui/react`). Sem bibliotecas de UI pesadas, sem utilitários compartilhados, sem CSS-in-JS no runtime.
+- **Acessibilidade:** Padrões WAI-ARIA, navegação completa pelo teclado e gerenciamento de foco incluídos por padrão.
+- **Tematizável:** CSS Modules em conjunto com propriedades customizadas (variáveis CSS) para fácil sobrescrita de tokens de design.
+- **Composição:** Usamos o padrão de composição para manter sua UI adaptável e flexível.
 
-## Stack
+## Tecnologias (Stack)
 
-| Tool                | Purpose                    |
-| ------------------- | -------------------------- |
-| React               | UI library (peer dep only) |
-| TypeScript          | Type safety                |
-| Vite                | Bundler & dev server       |
-| CSS Modules         | Scoped styles, no runtime  |
-| Storybook           | Component explorer & docs  |
-| Vitest + Playwright | Browser interaction tests  |
+| Ferramenta          | Propósito                                |
+| ------------------- | ---------------------------------------- |
+| React               | Biblioteca de UI (apenas peer dep)       |
+| TypeScript          | Tipagem estática e segurança             |
+| Vite                | Empacotador (Bundler) & servidor de dev  |
+| CSS Modules         | Estilos com escopo, sem peso em execução |
+| Storybook           | Explorador de componentes & documentação |
+| Vitest + Playwright | Testes de interação no navegador         |
 
-## Available Components
+## Componentes Disponíveis
 
-| Component     | Folder                       | Description                                                                |
-| ------------- | ---------------------------- | -------------------------------------------------------------------------- |
-| `Select`      | `src/features/select/`       | Single-value dropdown with keyboard nav, label, and required state         |
-| `MultiSelect` | `src/features/multi-select/` | Multi-value dropdown with search, chips, clear-all, and max-selected limit |
-| `Modal`       | `src/features/modal/`        | Overlaid accessible dialog with local or global state management (Zustand) |
+| Componente    | Pasta                        | Descrição                                                                          |
+| ------------- | ---------------------------- | ---------------------------------------------------------------------------------- |
+| `Select`      | `src/features/select/`       | Dropdown de valor único com navegação por teclado, rótulo e estado obrigatório     |
+| `MultiSelect` | `src/features/multi-select/` | Dropdown multi-valores com pesquisa, chips, limpar tudo e limite de seleção máxima |
+| `Modal`       | `src/features/modal/`        | Janela sobreposta acessível, com gestão de estado local ou global (via Zustand)    |
 
-## Getting Started
+## Começando
 
 ```bash
 pnpm install
-pnpm storybook         # dev server at http://localhost:6006
-pnpm build-storybook   # static build → storybook-static/
+pnpm storybook         # servidor de desenvolvimento em http://localhost:6006
+pnpm build-storybook   # build estático → storybook-static/
 ```
 
-## Using a Component
+## Como Usar um Componente
 
-1. Open the component in Storybook.
-2. Check the Code Viewer tab to view the source code.
-3. Install the dependencies for the component if it has any (e.g. `@base-ui/react`).
-4. Drop the files into your project and import the component.
+1. Abra o componente no Storybook.
+2. Acesse a aba Code Viewer para visualizar o código fonte.
+3. Instale as dependências do componente caso haja alguma (ex: `@base-ui/react`).
+4. Jogue os arquivos no seu projeto e importe o componente.
 
-No configuration or shared utilities needed — each component is entirely self-contained.
+Nenhuma configuração ou utilitário compartilhado é necessário — cada componente é inteiramente autônomo.
 
-## Deployment
+## Implantação (Deployment)
 
-The Storybook static build can be served as a plain website:
+O build estático do Storybook pode ser servido como um site comum:
 
 ```bash
-# Build
+# Build (Construir a imagem)
 docker build -t reusable-ui-components .
 
-# Run
+# Run (Rodar o container)
 docker run -p 8080:80 reusable-ui-components
 ```
 
-The `Dockerfile` uses a three-stage build (deps → Storybook build → nginx:alpine) for minimal image size.
+O `Dockerfile` usa um build em três estágios (deps → build do Storybook → nginx:alpine) para manter o tamanho mínimo da imagem.
 
-## License
+## Licença
 
 Apache License 2.0

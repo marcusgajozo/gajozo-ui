@@ -1,40 +1,40 @@
-# Select Component
+# Componente Select
 
-A custom Select component built using `@base-ui/react`'s Combobox primitive. It supports search filtering out of the box, full keyboard accessibility, and uses standard CSS modules for styling.
+Um componente customizado de seleção (Select) construído usando a primitiva Combobox do `@base-ui/react`. Ele suporta filtro de busca por padrão, acessibilidade total via teclado e utiliza CSS modules padrão para estilização.
 
-## Installation
+## Instalação
 
-1. Make sure you have `@base-ui/react` installed in your project:
+1. Certifique-se de que você tem o `@base-ui/react` instalado no seu projeto:
    ```bash
    pnpm add @base-ui/react
    ```
-2. Copy the entire `select` folder into your project (e.g., `src/components/select`).
+2. Copie a pasta inteira `select` para o seu projeto (ex: `src/features/select`).
 
-## Structure
+## Estrutura
 
-- `index.ts`: Export file.
-- `select.tsx`: Main component file.
-- `select-trigger.tsx`: Subcomponent for the trigger button.
-- `select-dropdown.tsx`: Subcomponent for the dropdown/popup menu.
-- `theme.css`: **Design API!** Contains all design tokens (CSS variables) for the component. Edit this file to easily customize colors, borders, typography, etc.
-- `select.module.css`: Base structural styles (container, label).
-- `select-trigger.module.css`: Structural styles specific to the trigger.
-- `select-dropdown.module.css`: Structural styles specific to the dropdown.
+- `index.ts`: Arquivo de exportação (API pública).
+- `select.tsx`: Arquivo principal do componente.
+- `select-trigger.tsx`: Subcomponente responsável pelo botão de gatilho (trigger).
+- `select-dropdown.tsx`: Subcomponente responsável pelo menu suspenso (popup/dropdown).
+- `theme.css`: **API de Design!** Contém todos os tokens de design (variáveis CSS) para o componente. Edite este arquivo para customizar cores, bordas, tipografia, etc. facilmente.
+- `select.module.css`: Estilos estruturais base (contêiner, rótulo).
+- `select-trigger.module.css`: Estilos estruturais específicos do gatilho (trigger).
+- `select-dropdown.module.css`: Estilos estruturais específicos do menu suspenso (dropdown).
 
-## Usage
+## Como Usar
 
 ```tsx
-import { Select } from "./select";
+import { Select } from "@/features/select/ui";
 
 const options = [
-  { value: "apple", label: "Apple" },
+  { value: "apple", label: "Maçã" },
   { value: "banana", label: "Banana" },
-  { value: "orange", label: "Orange", disabled: true },
+  { value: "orange", label: "Laranja", disabled: true },
 ];
 
 export function MyForm() {
   return (
-    <Select label="Choose a fruit" options={options} onChange={(value) => console.log(value)} />
+    <Select label="Escolha uma fruta" options={options} onChange={(value) => console.log(value)} />
   );
 }
 ```

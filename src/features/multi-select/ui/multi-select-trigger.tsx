@@ -88,7 +88,17 @@ export function MultiSelectTrigger({
   return (
     <Combobox.InputGroup className={styles.triggerWrapper} title={tooltipText}>
       {icon && <span className={styles.iconWrapper}>{icon}</span>}
-      <div className={styles.chipArea} ref={containerRef} onClick={handleWrapperClick}>
+      <div
+        className={styles.chipArea}
+        ref={containerRef}
+        onClick={handleWrapperClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            handleWrapperClick();
+          }
+        }}
+        role="presentation"
+      >
         <div ref={measureRef} className={styles.measureLayer} aria-hidden="true">
           {selectedObjs.map((_, i) => {
             const text = selectedObjs

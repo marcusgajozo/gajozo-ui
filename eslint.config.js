@@ -8,6 +8,7 @@ import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import unusedImports from "eslint-plugin-unused-imports";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 
 const localPlugin = {
   rules: {
@@ -39,7 +40,8 @@ const localPlugin = {
 };
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "storybook-static"]),
+  jsxA11y.flatConfigs.recommended,
   {
     files: ["**/*.{ts,tsx}"],
     plugins: {

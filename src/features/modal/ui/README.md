@@ -1,47 +1,47 @@
-# Modal Component
+# Componente Modal
 
-The `Modal` feature provides a flexible, accessible, and composition-based dialog window, built on top of `@base-ui/react/dialog`. It supports uncontrolled usage as well as global state management via `Zustand`.
+A funcionalidade `Modal` fornece uma janela de diálogo flexível, acessível e baseada em composição, construída sobre o `@base-ui/react/dialog`. Suporta tanto uso não-controlado (estado interno) quanto gerenciamento de estado global via `Zustand`.
 
-## Features
+## Funcionalidades (Features)
 
-- **Composition Pattern**: Easily structure the modal content using `Modal.Root`, `Modal.Popup`, `Modal.Title`, etc.
-- **Accessible**: Built with Base UI to ensure keyboard navigation, focus trap, and ARIA attributes.
-- **Global State Management**: Includes a custom hook `useModal` powered by Zustand to easily manage modal states globally.
-- **CSS Modules**: Fully styled with CSS modules, offering easy theme customization.
+- **Padrão de Composição**: Estruture facilmente o conteúdo do modal usando `Modal.Root`, `Modal.Popup`, `Modal.Title`, etc.
+- **Acessível**: Construído com Base UI para garantir navegação por teclado, captura de foco (focus trap) e atributos ARIA.
+- **Gerenciamento de Estado Global**: Inclui um hook customizado `useModal` integrado ao Zustand para gerenciar facilmente o estado de modais de forma global.
+- **CSS Modules**: Totalmente estilizado com CSS modules, oferecendo customização fácil de temas.
 
-## Installation
+## Instalação
 
-This feature uses `@base-ui/react/dialog` for accessibility and `zustand` for state management. Ensure you have installed:
+Esta funcionalidade utiliza `@base-ui/react/dialog` para acessibilidade e `zustand` para estado. Certifique-se de ter instalado:
 
 ```bash
 pnpm install @base-ui/react zustand
 ```
 
-## Usage
+## Como Usar
 
-### 1. Uncontrolled / Local State (Composition Pattern)
+### 1. Estado Local / Não-controlado (Padrão de Composição)
 
-You can use the modal purely with local state or by relying on the internal uncontrolled state provided by `Modal.Trigger`.
+Você pode usar o modal puramente com estado local ou baseando-se no estado interno não-controlado fornecido pelo `Modal.Trigger`.
 
 ```tsx
-import { Modal } from "@/features/modal";
+import { Modal } from "@/features/modal/ui";
 
 function MyComponent() {
   return (
     <Modal.Root>
-      <Modal.Trigger>Open Modal</Modal.Trigger>
+      <Modal.Trigger>Abrir Modal</Modal.Trigger>
 
       <Modal.Popup>
-        <Modal.Title>Alert</Modal.Title>
+        <Modal.Title>Alerta</Modal.Title>
 
         <Modal.Body>
-          <Modal.Description>Are you sure you want to proceed?</Modal.Description>
-          <p>Any extra scrolling content goes here!</p>
+          <Modal.Description>Tem certeza de que deseja continuar?</Modal.Description>
+          <p>Qualquer conteúdo extra com rolagem entra aqui!</p>
         </Modal.Body>
 
         <Modal.Buttons>
-          <Modal.ButtonClose>Cancel</Modal.ButtonClose>
-          <Modal.ButtonAction>Confirm</Modal.ButtonAction>
+          <Modal.ButtonClose>Cancelar</Modal.ButtonClose>
+          <Modal.ButtonAction>Confirmar</Modal.ButtonAction>
         </Modal.Buttons>
       </Modal.Popup>
     </Modal.Root>
@@ -49,44 +49,45 @@ function MyComponent() {
 }
 ```
 
-### 2. Controlled via Global State (Zustand)
+### 2. Controlado via Estado Global (Zustand)
 
-For complex applications, you often want to open a modal from a different component or pass specific data to it. Use the `useModal` hook for this.
+Em aplicações complexas, geralmente queremos abrir um modal a partir de um componente diferente ou passar dados específicos para ele. Use o hook `useModal` para isso.
 
 ```tsx
-import { Modal, useModal } from "@/features/modal";
+import { Modal } from "@/features/modal/ui";
+import { useModal } from "@/features/modal/ui/use-modal";
 
-// 1. The component that renders the modal
+// 1. O componente que renderiza o modal
 function EditUserModal() {
   const modal = useModal<{ userId: string }>("edit-user");
 
   return (
     <Modal.Root open={modal.isOpen} onOpenChange={(open) => !open && modal.close()}>
       <Modal.Popup>
-        <Modal.Title>Edit User</Modal.Title>
+        <Modal.Title>Editar Usuário</Modal.Title>
         <Modal.Body>
-          <Modal.Description>Editing user ID: {modal.data?.userId}</Modal.Description>
+          <Modal.Description>Editando o usuário: {modal.data?.userId}</Modal.Description>
         </Modal.Body>
         <Modal.Buttons>
-          <Modal.ButtonClose>Cancel</Modal.ButtonClose>
-          <Modal.ButtonAction>Save Changes</Modal.ButtonAction>
+          <Modal.ButtonClose>Cancelar</Modal.ButtonClose>
+          <Modal.ButtonAction>Salvar Alterações</Modal.ButtonAction>
         </Modal.Buttons>
       </Modal.Popup>
     </Modal.Root>
   );
 }
 
-// 2. The component that triggers the modal
+// 2. O componente que dispara o modal
 function UserList() {
   const modal = useModal("edit-user");
 
-  return <button onClick={() => modal.open({ userId: "123" })}>Edit User</button>;
+  return <button onClick={() => modal.open({ userId: "123" })}>Editar Usuário</button>;
 }
 ```
 
-## Styling
+## Estilização
 
-Styles are applied via CSS Modules in `ui/modal.module.css`. A set of CSS variables are available in `ui/theme.css` to easily customize the appearance:
+Os estilos são aplicados via CSS Modules no arquivo `ui/modal.module.css`. Um conjunto de variáveis CSS está disponível no `ui/theme.css` para customizar facilmente a aparência:
 
 - `--modal-backdrop-bg`
 - `--modal-bg`
@@ -94,17 +95,17 @@ Styles are applied via CSS Modules in `ui/modal.module.css`. A set of CSS variab
 - `--modal-title-color`
 - `--modal-desc-color`
 
-By default, the modal adapts to the width and height of its internal content. It will automatically prevent sticking to the screen edges via a `calc(100vh - 2rem)` maximum constraint.
+Por padrão, o modal se adapta à largura e altura do seu conteúdo interno. Ele automaticamente previne colar nas bordas da tela usando um limite máximo de `calc(100vh - 2rem)` e `calc(100vw - 2rem)`.
 
-## Components Structure
+## Estrutura de Componentes
 
-- `Modal.Root`: The provider component. By default, it blocks closing the modal when clicking on the backdrop. You can pass `disableOutsideClick={false}` to allow it.
-- `Modal.Trigger`: The button that opens the modal natively.
-- `Modal.Popup`: The modal window (includes the backdrop automatically). Accepts `hideCloseIcon` to remove the default top-right "X" button.
-- `Modal.Title`: The title text (fixed at top).
-- `Modal.Body`: Wrapper for internal content that exceeds the modal max-height. Automatically adds vertical scrolling while keeping Title and Buttons fixed.
-- `Modal.Description`: The description text (usually placed inside Body).
-- `Modal.ButtonClose`: A styled secondary button that closes the modal.
-- `Modal.ButtonAction`: A styled primary button for main actions.
-- `Modal.CloseIcon`: The SVG "X" icon component (rendered by default inside `Popup`).
-- `Modal.Buttons`: A flex container for alignment of action buttons (centered and fixed at bottom by default).
+- `Modal.Root`: O componente provedor. Por padrão, ele impede o fechamento do modal ao clicar no fundo (backdrop). Você pode passar `disableOutsideClick={false}` para permitir.
+- `Modal.Trigger`: O botão que abre o modal nativamente.
+- `Modal.Popup`: A janela do modal (já inclui o fundo escuro automaticamente). Aceita a propriedade `hideCloseIcon` para remover o botão "X" superior direito e, ao mesmo tempo, bloquear o fechamento via tecla Escape (Esc).
+- `Modal.Title`: O texto de título (fixo no topo).
+- `Modal.Body`: Envoltório para conteúdos internos que excedem a altura máxima do modal. Adiciona rolagem vertical automaticamente enquanto mantém o Título e Botões fixos.
+- `Modal.Description`: O texto de descrição (geralmente colocado dentro do Body).
+- `Modal.ButtonClose`: Um botão secundário estilizado que fecha o modal.
+- `Modal.ButtonAction`: Um botão primário estilizado para ações principais.
+- `Modal.CloseIcon`: O componente de ícone "X" em SVG (renderizado por padrão dentro do `Popup`).
+- `Modal.Buttons`: Um container flexível para o alinhamento dos botões de ação (centralizados e fixos na parte inferior por padrão).

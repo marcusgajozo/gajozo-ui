@@ -5,10 +5,17 @@ import * as React from "react";
 
 import styles from "./modal.module.css";
 
+const ESCAPE_REASONS = ["escape-key", "close-watcher"];
+
+const ModalContext = React.createContext<{
+  hideCloseIcon: boolean;
+  setHideCloseIcon: (val: boolean) => void;
+} | null>(null);
+
 type ModalRootProps = {
   children: React.ReactNode;
   open?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange?: React.ComponentPropsWithoutRef<typeof Dialog.Root>["onOpenChange"];
   defaultOpen?: boolean;
   disableOutsideClick?: boolean;
 };
@@ -20,15 +27,29 @@ export function Root({
   defaultOpen,
   disableOutsideClick = true,
 }: ModalRootProps) {
+  const [hideCloseIcon, setHideCloseIcon] = React.useState(false);
+
+  const handleOpenChange: NonNullable<ModalRootProps["onOpenChange"]> = (isOpen, details) => {
+    if (hideCloseIcon && ESCAPE_REASONS.includes(details.reason)) {
+      details.cancel();
+      return;
+    }
+    if (onOpenChange) {
+      onOpenChange(isOpen, details);
+    }
+  };
+
   return (
-    <Dialog.Root
-      open={open}
-      onOpenChange={onOpenChange}
-      defaultOpen={defaultOpen}
-      disablePointerDismissal={disableOutsideClick}
-    >
-      {children}
-    </Dialog.Root>
+    <ModalContext.Provider value={{ hideCloseIcon, setHideCloseIcon }}>
+      <Dialog.Root
+        open={open}
+        onOpenChange={handleOpenChange}
+        defaultOpen={defaultOpen}
+        disablePointerDismissal={disableOutsideClick}
+      >
+        {children}
+      </Dialog.Root>
+    </ModalContext.Provider>
   );
 }
 
@@ -50,6 +71,14 @@ export function Popup({
   hideCloseIcon = false,
   ...props
 }: ModalPopupProps) {
+  const ctx = React.useContext(ModalContext);
+
+  React.useEffect(() => {
+    if (ctx) {
+      ctx.setHideCloseIcon(hideCloseIcon);
+    }
+  }, [hideCloseIcon, ctx]);
+
   return (
     <Dialog.Portal>
       {!hideBackdrop && <Dialog.Backdrop className={styles.backdrop} />}
