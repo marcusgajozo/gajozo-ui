@@ -15,6 +15,8 @@ export default defineConfig({
         },
       ],
     },
-    include: ["src/**/*.test.tsx", "src/**/*.test.ts"],
+  },
+  optimizeDeps: {
+    include: ["@base-ui/react"],
   },
 });

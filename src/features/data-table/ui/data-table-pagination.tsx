@@ -1,3 +1,4 @@
+import { Select } from "@base-ui/react";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Table } from "@tanstack/react-table";
@@ -22,20 +23,32 @@ export function DataTablePagination<TData>({ table, totalItems }: DataTablePagin
       <div className={styles.footerLeft}>
         <div className={styles.displaySelectGroup}>
           <span>Exibir</span>
-          <select
-            className={styles.nativeSelect}
-            value={pageSize}
-            onChange={(e) => {
-              table.setPageSize(Number(e.target.value));
+          <Select.Root
+            value={pageSize.toString()}
+            onValueChange={(val) => {
+              if (val) table.setPageSize(Number(val));
             }}
-            data-testid="page-size-select"
           >
-            {[10, 20, 30, 40, 50].map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
+            <Select.Trigger
+              className={styles.selectTrigger}
+              aria-label="Itens por página"
+              data-testid="page-size-select"
+            >
+              <Select.Value />
+              <div className={styles.selectIcon} />
+            </Select.Trigger>
+            <Select.Portal>
+              <Select.Positioner>
+                <Select.Popup className={styles.selectPopup}>
+                  {[10, 20, 30, 40, 50].map((size) => (
+                    <Select.Item key={size} value={size.toString()} className={styles.selectItem}>
+                      <Select.ItemText>{size}</Select.ItemText>
+                    </Select.Item>
+                  ))}
+                </Select.Popup>
+              </Select.Positioner>
+            </Select.Portal>
+          </Select.Root>
         </div>
         <div className={styles.itemCount}>
           {totalItems > 0 ? `${startItem}-${endItem} de ${totalItems} itens` : "0 itens"}
@@ -45,20 +58,34 @@ export function DataTablePagination<TData>({ table, totalItems }: DataTablePagin
       <div className={styles.footerRight}>
         <div className={styles.pageSelectGroup}>
           <span>Página</span>
-          <select
-            className={styles.nativeSelect}
-            value={pageIndex + 1}
-            onChange={(e) => {
-              table.setPageIndex(Number(e.target.value) - 1);
+          <Select.Root
+            value={(pageIndex + 1).toString()}
+            onValueChange={(val) => {
+              if (val) table.setPageIndex(Number(val) - 1);
             }}
-            data-testid="page-index-select"
           >
-            {Array.from({ length: table.getPageCount() }, (_, i) => i + 1).map((page) => (
-              <option key={page} value={page}>
-                {page}
-              </option>
-            ))}
-          </select>
+            <Select.Trigger
+              className={styles.selectTrigger}
+              aria-label="Página atual"
+              data-testid="page-index-select"
+            >
+              <Select.Value />
+              <div className={styles.selectIcon} />
+            </Select.Trigger>
+            <Select.Portal>
+              <Select.Positioner>
+                <Select.Popup className={styles.selectPopup}>
+                  {Array.from({ length: Math.max(1, table.getPageCount()) }, (_, i) => i + 1).map(
+                    (page) => (
+                      <Select.Item key={page} value={page.toString()} className={styles.selectItem}>
+                        <Select.ItemText>{page}</Select.ItemText>
+                      </Select.Item>
+                    )
+                  )}
+                </Select.Popup>
+              </Select.Positioner>
+            </Select.Portal>
+          </Select.Root>
         </div>
         <div className={styles.paginationButtons}>
           <button

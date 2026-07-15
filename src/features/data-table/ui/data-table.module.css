@@ -5,7 +5,7 @@
   border: 1px solid var(--dt-border);
   border-radius: 8px;
   background-color: var(--dt-bg);
-  font-family: inherit;
+  font-family: var(--dt-font-family);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -14,13 +14,51 @@
 }
 
 .checkbox {
+  appearance: none;
+  -webkit-appearance: none;
   width: 16px;
   height: 16px;
   border: 1px solid var(--dt-checkbox-border);
   border-radius: 4px;
   cursor: pointer;
-  accent-color: var(--dt-accent);
   margin-top: 4px;
+  position: relative;
+  background-color: var(--dt-bg);
+  transition: all 0.2s ease-in-out;
+}
+
+.checkbox:checked,
+.checkbox:indeterminate {
+  background-color: var(--dt-accent);
+  border-color: var(--dt-accent);
+}
+
+.checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--dt-accent-foreground);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox:indeterminate::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 6px;
+  width: 8px;
+  height: 2px;
+  background-color: var(--dt-accent-foreground);
+  border-radius: 1px;
+}
+
+.checkbox:focus-visible {
+  outline: 2px solid var(--dt-accent);
+  outline-offset: 2px;
 }
 
 .actionCell {

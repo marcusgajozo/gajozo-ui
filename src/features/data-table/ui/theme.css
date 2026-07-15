@@ -1,13 +1,18 @@
 :root {
+  --dt-font-family: system-ui, -apple-system, sans-serif;
+  --dt-primary: #923b12;
+  --dt-row-thickness: 10px;
+
   --dt-bg: #ffffff;
   --dt-border: #e2e8f0;
   --dt-header-bg: #f8fafc;
-  --dt-header-text: #334155;
-  --dt-body-text: #64748b;
+  --dt-row-hover: #f1f5f9;
+  --dt-row-selected: color-mix(in srgb, var(--dt-primary) 8%, #ffffff);
+  --dt-text-color: #000000;
   --dt-checkbox-border: #cbd5e1;
-  --dt-accent: #0f766e;
-  --dt-accent-hover: #115e59;
-  --dt-footer-text: #475569;
-  --dt-icon: #334155;
+  --dt-accent: var(--dt-primary);
+  --dt-accent-hover: color-mix(in srgb, var(--dt-primary) 85%, #000000);
+  --dt-accent-foreground: #ffffff;
+  --dt-icon: #64748b;
   --dt-disabled: #cbd5e1;
 }

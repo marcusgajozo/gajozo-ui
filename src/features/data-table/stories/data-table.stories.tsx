@@ -2,7 +2,6 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ColumnDef } from "@tanstack/react-table";
-import React from "react";
 
 import { DataTable } from "../ui/data-table";
 import styles from "../ui/data-table.module.css";
@@ -123,23 +122,6 @@ const data: Viagem[] = [
 
 const columns: ColumnDef<Viagem>[] = [
   {
-    id: "select",
-    header: () => (
-      <input type="checkbox" className={styles.checkbox} aria-label="Selecionar todos" />
-    ),
-    cell: ({ row }) => (
-      <div className={styles.checkboxCell}>
-        <input
-          type="checkbox"
-          className={styles.checkbox}
-          checked={row.getIsSelected()}
-          onChange={row.getToggleSelectedHandler()}
-          aria-label="Selecionar linha"
-        />
-      </div>
-    ),
-  },
-  {
     accessorKey: "sentido",
     header: "Sentido",
   },
@@ -165,6 +147,7 @@ const columns: ColumnDef<Viagem>[] = [
   },
   {
     id: "acoes",
+    size: 48,
     header: "Ações",
     cell: () => (
       <div className={styles.actionCell}>
@@ -181,5 +164,6 @@ export const Default: Story = {
     columns,
     data,
     totalItems: 100,
+    onSelectRow: () => {},
   },
 };
