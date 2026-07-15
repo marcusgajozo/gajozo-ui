@@ -1,0 +1,34 @@
+:root {
+  /* Defina a cor principal do modal aqui */
+  --modal-primary: #0e7913;
+
+  --modal-backdrop-bg: rgba(0, 0, 0, 0.5);
+  --modal-bg: #ffffff;
+  --modal-radius: 8px;
+  --modal-padding: 1.5rem;
+  --modal-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --modal-font-family: system-ui, -apple-system, sans-serif;
+
+  /* Cores de ações secundárias / fechar (baseado num tom mais neutro ou apagado) */
+  --modal-close-color: #740000;
+  --modal-close-hover-bg: color-mix(in srgb, var(--modal-close-color) 10%, transparent);
+  --modal-close-hover-color: color-mix(in srgb, var(--modal-close-color) 80%, black);
+
+  /* Button Action (Primary) */
+  --modal-btn-action-bg: var(--modal-primary);
+  --modal-btn-action-color: #ffffff;
+  --modal-btn-action-hover-bg: color-mix(in srgb, var(--modal-primary) 85%, black);
+
+  /* Button Close (Secondary/Neutral) */
+  --modal-btn-close-bg: color-mix(in srgb, var(--modal-close-color) 15%, transparent);
+  --modal-btn-close-color: var(--modal-close-color);
+  --modal-btn-close-hover-bg: color-mix(in srgb, var(--modal-close-color) 25%, transparent);
+
+  --modal-title-size: 1.5rem;
+  --modal-title-weight: 500;
+  --modal-title-color: var(--modal-primary);
+
+  /* Puxa o cinza levemente pra dentro da cor principal (15%) para dar harmonia */
+  --modal-desc-size: 1rem;
+  --modal-desc-color: color-mix(in srgb, var(--modal-primary) 15%, #4b5563);
+}

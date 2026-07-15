@@ -1,5 +1,5 @@
 {
-  "name": "gajozo-ui",
+  "name": "reusable-ui-components",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -16,7 +16,8 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",
