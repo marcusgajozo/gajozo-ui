@@ -3,11 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import { CodeViewer } from "../../../storybook/code-viewer";
+import { DownloadZipButton } from "../../../storybook/download-zip";
 import { Select } from "../ui/index";
-import cssSrc from "../ui/select.module.css?raw";
-import selectSrc from "../ui/select.tsx?raw";
-import themeSrc from "../ui/theme.css?raw";
+
+const uiFiles = import.meta.glob("../ui/*", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+const zipFiles = Object.entries(uiFiles).map(([path, content]) => ({
+  name: path.split("/").pop()!,
+  content,
+}));
 
 const COUNTRIES: { value: string; label: string; disabled?: boolean }[] = [
   { value: "br", label: "Brasil" },
@@ -43,14 +50,7 @@ export const Default: Story = {
           <Select {...args} />
         </div>
       </div>
-      <CodeViewer
-        files={[
-          { name: "theme.css", content: themeSrc, language: "css" },
-          { name: "select.tsx", content: selectSrc, language: "tsx" },
-          { name: "select.module.css", content: cssSrc, language: "css" },
-        ]}
-        zipName="select"
-      />
+      <DownloadZipButton files={zipFiles} zipName="select" />
     </div>
   ),
 };

@@ -3,11 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import { CodeViewer } from "../../../storybook/code-viewer";
+import { DownloadZipButton } from "../../../storybook/download-zip";
 import { MultiSelect } from "../ui/index";
-import cssSrc from "../ui/multi-select.module.css?raw";
-import multiSelectSrc from "../ui/multi-select.tsx?raw";
-import themeSrc from "../ui/theme.css?raw";
+
+const uiFiles = import.meta.glob("../ui/*", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+const zipFiles = Object.entries(uiFiles).map(([path, content]) => ({
+  name: path.split("/").pop()!,
+  content,
+}));
 
 const FRAMEWORKS: { value: string; label: string; disabled?: boolean }[] = [
   { value: "react", label: "React" },
@@ -25,7 +32,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     options: FRAMEWORKS,
-    placeholder: "Select frameworks...",
+    placeholder: "Selecione frameworks...",
     onChange: fn(),
     icon: <FontAwesomeIcon icon={faTags} />,
   },
@@ -43,14 +50,7 @@ export const Default: Story = {
           <MultiSelect {...args} />
         </div>
       </div>
-      <CodeViewer
-        files={[
-          { name: "theme.css", content: themeSrc, language: "css" },
-          { name: "multi-select.tsx", content: multiSelectSrc, language: "tsx" },
-          { name: "multi-select.module.css", content: cssSrc, language: "css" },
-        ]}
-        zipName="multi-select"
-      />
+      <DownloadZipButton files={zipFiles} zipName="multi-select" />
     </div>
   ),
 };

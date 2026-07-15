@@ -56,6 +56,18 @@ src/
    import { Popup } from "@/features/modal/ui/modal";
    ```
 
+## Consumindo Componentes
+
+Como somos uma biblioteca baseada no conceito "copiar-colar", você não instala nossos componentes via `npm` ou `yarn`. Em vez disso, você copia o código-fonte diretamente para o seu projeto.
+
+Para facilitar esse processo, a documentação de cada componente no **Storybook** possui um botão interativo chamado **"Baixar Código-Fonte (ZIP)"**.
+
+Ao clicar neste botão:
+
+1. Um arquivo `.zip` será baixado contendo todo o conteúdo do diretório `ui/` daquela funcionalidade (arquivos `.tsx`, `.ts`, `.module.css` e `.css`).
+2. Extraia o conteúdo e coloque-o na pasta apropriada do seu projeto (ex: `src/components/[nome-do-componente]`).
+3. Instale as dependências externas que o componente possa exigir (geralmente documentadas no `README.md` do próprio componente, como `@base-ui/react` ou `zustand`).
+
 ## Criando uma Nova Funcionalidade
 
 Ao criar uma nova funcionalidade, sempre siga esta estrutura estabelecida. Certifique-se de que:
