@@ -1,0 +1,76 @@
+.tableContainer {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  caption-side: bottom;
+  font-size: 14px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tableHeader {
+  /* Estilos adicionais de thead, se necessários */
+}
+
+.tableBody {
+  /* Estilos adicionais de tbody, se necessários */
+}
+
+.tableBody .tableRow:last-child .tableCell {
+  border-bottom: none;
+}
+
+.tableFooter {
+  border-top: 1px solid var(--dt-border);
+  background-color: var(--dt-bg);
+  font-weight: 500;
+}
+
+.tableRow {
+  border-bottom: 1px solid var(--dt-border);
+  transition: background-color 0.2s;
+}
+
+.tableRow:hover {
+  background-color: var(--dt-header-bg);
+}
+
+.tableHead {
+  padding: 16px;
+  background-color: var(--dt-header-bg);
+  color: var(--dt-header-text);
+  font-weight: 600;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.tableHead:first-child {
+  padding-left: 24px;
+}
+.tableHead:last-child {
+  padding-right: 24px;
+}
+
+.tableCell {
+  padding: 16px;
+  color: var(--dt-body-text);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.tableCell:first-child {
+  padding-left: 24px;
+}
+.tableCell:last-child {
+  padding-right: 24px;
+}
+
+.tableCaption {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--dt-body-text);
+}

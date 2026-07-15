@@ -23,6 +23,7 @@ src/
         ├── ui/                     # Detalhes de implementação
         │   ├── [componente].tsx    # Componentes React principais
         │   ├── [componente].module.css # CSS Modules para estilização
+        │   ├── theme.css           # Variáveis globais/CSS para tematização do componente
         │   ├── use-[hook].ts       # Hooks customizados internos ou exportados
         │   ├── index.ts            # API Pública / Barrel file para a UI
         │   └── README.md           # Documentação específica para esta funcionalidade
@@ -56,6 +57,10 @@ src/
    import { Popup } from "@/features/modal/ui/modal";
    ```
 
+## Compatibilidade
+
+A ideia fundamental deste projeto é garantir total compatibilidade com o **React 16** e todas as suas versões posteriores. O objetivo é que os componentes construídos funcionem de maneira estável e possam ser facilmente adaptados, copiados e colados em bases de código de diferentes idades — desde os projetos legados baseados em React 16 até os mais modernos utilizando as versões mais recentes do ecossistema.
+
 ## Consumindo Componentes
 
 Como somos uma biblioteca baseada no conceito "copiar-colar", você não instala nossos componentes via `npm` ou `yarn`. Em vez disso, você copia o código-fonte diretamente para o seu projeto.
@@ -75,4 +80,5 @@ Ao criar uma nova funcionalidade, sempre siga esta estrutura estabelecida. Certi
 - Você crie os subdiretórios `ui/`, `tests/` e `stories/`.
 - Você exporte corretamente os componentes públicos e tipos em `ui/index.ts`.
 - Você use CSS Modules (`.module.css`) para estilização com escopo a fim de evitar conflitos.
+- Sempre crie um arquivo `theme.css` na pasta `ui/` que contenha as variáveis CSS do componente, facilitando a customização por quem consumi-lo.
 - Você escreva testes de unidade e histórias para os novos componentes.

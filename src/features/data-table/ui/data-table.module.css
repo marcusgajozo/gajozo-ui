@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--dt-border);
+  border-radius: 8px;
+  background-color: var(--dt-bg);
+  font-family: inherit;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.checkboxCell {
+  width: 48px;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--dt-checkbox-border);
+  border-radius: 4px;
+  cursor: pointer;
+  accent-color: var(--dt-accent);
+  margin-top: 4px;
+}
+
+.actionCell {
+  width: 48px;
+  text-align: center;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: var(--dt-accent);
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 16px;
+}
+
+.actionButton:hover {
+  color: var(--dt-accent-hover);
+}

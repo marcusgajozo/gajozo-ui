@@ -1,0 +1,84 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-top: 1px solid var(--dt-border);
+  background-color: var(--dt-bg);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  font-size: 14px;
+  color: var(--dt-footer-text);
+}
+
+.footerLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footerRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.displaySelectGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pageSelectGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nativeSelect {
+  padding: 4px 24px 4px 8px;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  color: var(--dt-header-text);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 12px;
+}
+
+.nativeSelect:focus {
+  outline: none;
+}
+
+.itemCount {
+  color: var(--dt-body-text);
+  border-left: 1px solid var(--dt-border);
+  padding-left: 16px;
+}
+
+.paginationButtons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border-left: 1px solid var(--dt-border);
+  padding-left: 16px;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  color: var(--dt-icon);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton:disabled {
+  color: var(--dt-disabled);
+  cursor: not-allowed;
+}
