@@ -26,7 +26,7 @@ describe("Select Component", () => {
     await user.click(screen.getByRole("option", { name: /^Brasil$/ }));
 
     expect(screen.queryByRole("listbox")).toBeNull();
-    expect(combobox).toHaveTextContent("Brasil");
+    expect(combobox.textContent).toContain("Brasil");
   });
 
   test("Keyboard Navigation", async () => {
@@ -43,7 +43,7 @@ describe("Select Component", () => {
     await user.keyboard("{Enter}");
 
     expect(screen.queryByRole("listbox")).toBeNull();
-    expect(combobox).toHaveTextContent("Brasil");
+    expect(combobox.textContent).toContain("Brasil");
   });
 
   test("Escape closes without selecting", async () => {
@@ -58,7 +58,7 @@ describe("Select Component", () => {
     await user.keyboard("{Escape}");
 
     expect(screen.queryByRole("listbox")).toBeNull();
-    expect(combobox).toHaveTextContent("Selecione...");
+    expect(combobox.textContent).toContain("Selecione...");
   });
 
   test("With Label", () => {
@@ -94,7 +94,7 @@ describe("Select Component", () => {
 
     const options = screen.getAllByRole("option");
     expect(options.length).toBe(1);
-    expect(options[0]).toHaveTextContent("Portugal");
+    expect(options[0].textContent).toContain("Portugal");
 
     await user.clear(searchInput);
     expect(screen.getAllByRole("option").length).toBe(COUNTRIES.length);
@@ -110,6 +110,6 @@ describe("Select Component", () => {
     expect(disabledOption.getAttribute("aria-disabled")).toBe("true");
 
     await user.click(disabledOption);
-    expect(screen.getByRole("combobox")).toHaveTextContent("Selecione...");
+    expect(screen.getByRole("combobox").textContent).toContain("Selecione...");
   });
 });
