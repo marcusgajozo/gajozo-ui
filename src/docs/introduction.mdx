@@ -2,45 +2,101 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta title="Começando/Introdução" />
 
-# Gajozo UI
+# Componentes Reutilizáveis
 
 Biblioteca de componentes React baseada em **copia e cola** — sem dependência de framework de UI, sem pacote npm para instalar.
 
 ## O que é?
 
-Gajozo UI é um conjunto de componentes prontos para uso que você copia diretamente para o seu projeto. Cada componente fica em uma pasta isolada contendo o componente principal, seus subcomponentes e arquivos de estilo `.module.css`. Basta copiar a pasta, instalar a dependência base (se houver, como `@base-ui/react`), importar o componente e usar.
+Este é um conjunto de componentes prontos para uso que você copia diretamente para o seu projeto. Cada componente fica em uma pasta isolada contendo o componente principal, seus subcomponentes e arquivos de estilo `.module.css`. Basta copiar a pasta, instalar a dependência base (se houver, como `@base-ui/react`), importar o componente e usar.
 
 ## Filosofia
 
 - **Copia e cola:** Abra a story do componente, clique em _Baixar ZIP_ ou copie os arquivos individualmente e cole no seu projeto.
-- **Zero dependências de runtime:** Os componentes dependem apenas do React. Nenhuma biblioteca de UI, nenhum utilitário compartilhado.
-- **Compatibilidade ampla:** Funciona com React 16.8 (era dos hooks) até React 19 sem nenhuma adaptação. Nenhum uso de `useId`, APIs concorrentes ou RSC.
-- **Acessível:** Padrões WAI-ARIA, navegação por teclado e gerenciamento de foco incluídos nativamente.
-- **Customizável:** CSS custom properties para sobrescrever tokens de design sem alterar o componente.
+- **Zero dependências de runtime:** Os componentes dependem apenas do React e de bibliotecas headless utilitárias como o Base UI. Nenhuma biblioteca visual pesada e nenhum utilitário compartilhado que te prenda a um ecossistema.
+- **Acessível:** Padrões WAI-ARIA, navegação por teclado e gerenciamento de foco incluídos nativamente (muitos via Base UI).
+- **Customizável:** Padrão CSS Modules junto com custom properties para sobrescrever tokens de design sem alterar o componente internamente.
+- **Composição:** Usamos o padrão de composição (Composition Pattern) sempre que aplicável para garantir flexibilidade.
 
 ## Tecnologias
 
-| Ferramenta          | Versão    | Uso                                      |
-| ------------------- | --------- | ---------------------------------------- |
-| React               | 16.8 – 19 | Biblioteca de UI (apenas peer dep)       |
-| TypeScript          | ~6        | Tipagem estática                         |
-| Vite                | 8         | Bundler e servidor de desenvolvimento    |
-| CSS Modules         | —         | Estilos com escopo, sem runtime          |
-| Storybook           | 10        | Explorador de componentes e documentação |
-| Vitest + Playwright | 4         | Testes de interação no browser real      |
+<table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "2rem" }}>
+  <thead>
+    <tr style={{ borderBottom: "2px solid #e5e7eb", textAlign: "left" }}>
+      <th style={{ padding: "0.5rem" }}>Ferramenta</th>
+      <th style={{ padding: "0.5rem" }}>Uso</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+      <td style={{ padding: "0.5rem", fontWeight: "bold" }}>React</td>
+      <td style={{ padding: "0.5rem" }}>Biblioteca de UI (apenas peer dep)</td>
+    </tr>
+    <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+      <td style={{ padding: "0.5rem", fontWeight: "bold" }}>TypeScript</td>
+      <td style={{ padding: "0.5rem" }}>Tipagem estática</td>
+    </tr>
+    <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+      <td style={{ padding: "0.5rem", fontWeight: "bold" }}>Vite</td>
+      <td style={{ padding: "0.5rem" }}>Bundler e servidor de desenvolvimento</td>
+    </tr>
+    <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+      <td style={{ padding: "0.5rem", fontWeight: "bold" }}>CSS Modules</td>
+      <td style={{ padding: "0.5rem" }}>Estilos com escopo, sem runtime</td>
+    </tr>
+    <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+      <td style={{ padding: "0.5rem", fontWeight: "bold" }}>Storybook</td>
+      <td style={{ padding: "0.5rem" }}>Explorador de componentes e documentação</td>
+    </tr>
+    <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+      <td style={{ padding: "0.5rem", fontWeight: "bold" }}>Vitest + Playwright</td>
+      <td style={{ padding: "0.5rem" }}>Testes de interação no browser real</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Componentes disponíveis
 
-| Componente      | Descrição                                                                       |
-| --------------- | ------------------------------------------------------------------------------- |
-| **Select**      | Dropdown de valor único com navegação por teclado, label e campo obrigatório    |
-| **MultiSelect** | Dropdown de múltiplos valores com busca, chips, limpar tudo e limite de seleção |
+<table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "2rem" }}>
+  <thead>
+    <tr style={{ borderBottom: "2px solid #e5e7eb", textAlign: "left" }}>
+      <th style={{ padding: "0.5rem" }}>Componente</th>
+      <th style={{ padding: "0.5rem" }}>Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+      <td style={{ padding: "0.5rem" }}>
+        <strong>Select</strong>
+      </td>
+      <td style={{ padding: "0.5rem" }}>
+        Dropdown de valor único com navegação por teclado, label e campo obrigatório
+      </td>
+    </tr>
+    <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+      <td style={{ padding: "0.5rem" }}>
+        <strong>MultiSelect</strong>
+      </td>
+      <td style={{ padding: "0.5rem" }}>
+        Dropdown de múltiplos valores com busca, chips, limpar tudo e limite de seleção
+      </td>
+    </tr>
+    <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+      <td style={{ padding: "0.5rem" }}>
+        <strong>Modal</strong>
+      </td>
+      <td style={{ padding: "0.5rem" }}>
+        Janela sobreposta nativamente acessível com suporte à estado global (Zustand)
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Como usar um componente
 
 1. Navegue até o componente no menu lateral.
-2. Clique em **Copiar código** ou **Copiar CSS** para copiar o código.
-3. Ou clique em **Baixar ZIP** para obter os dois arquivos de uma vez.
-4. Cole os arquivos no seu projeto e importe o componente normalmente.
+2. Acesse a guia de código (ou Code Viewer) para copiar a implementação.
+3. Se o componente utilizar dependências externas (ex: Zustand, @base-ui/react), instale-as no seu projeto.
+4. Cole os arquivos no seu projeto (como `modal.tsx`, `modal.module.css` e `theme.css`) e importe onde precisar.
 
-Nenhuma configuração adicional é necessária — cada componente é completamente autossuficiente.
+Nenhuma configuração adicional pesada é necessária — cada funcionalidade da feature foi desenhada para ser copiada e funcionar.
