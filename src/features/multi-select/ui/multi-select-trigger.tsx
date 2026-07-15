@@ -54,13 +54,10 @@ export function MultiSelectTrigger({
       const gap = 4;
 
       for (let i = 0; i < chips.length; i++) {
-        // Use getBoundingClientRect().width for precise sub-pixel fractional width
         const chipWidth = chips[i].getBoundingClientRect().width;
 
         const isLast = i === chips.length - 1;
         const requiredWidth = isLast ? chipWidth : chipWidth + gap + badgeWidth;
-
-        console.log(`[TEST-DEBUG] i=${i} chipWidth=${chipWidth} requiredWidth=${requiredWidth} availableWidth=${availableWidth}`);
 
         if (requiredWidth > availableWidth) {
           break;
@@ -71,7 +68,6 @@ export function MultiSelectTrigger({
       setVisibleCount(count);
     };
 
-    // Run synchronously immediately to ensure perfect first paint
     calculate();
 
     const observer = new ResizeObserver(() => calculate());
