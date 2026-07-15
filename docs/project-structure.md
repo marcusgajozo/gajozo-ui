@@ -82,3 +82,4 @@ Ao criar uma nova funcionalidade, sempre siga esta estrutura estabelecida. Certi
 - Você use CSS Modules (`.module.css`) para estilização com escopo a fim de evitar conflitos.
 - Sempre crie um arquivo `theme.css` na pasta `ui/` que contenha as variáveis CSS do componente, facilitando a customização por quem consumi-lo.
 - Você escreva testes de unidade e histórias para os novos componentes.
+- Nas histórias do Storybook (`.stories.tsx`), defina sempre o `title` iniciando com `Components/` (ex: `title: "Components/NomeDoComponente"`) em vez de `Features/`.

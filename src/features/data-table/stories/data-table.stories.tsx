@@ -8,7 +8,7 @@ import { DataTable } from "../ui/data-table";
 import styles from "../ui/data-table.module.css";
 
 const meta = {
-  title: "Features/DataTable",
+  title: "Components/DataTable",
   component: DataTable,
   parameters: {
     layout: "padded",
