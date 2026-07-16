@@ -3,16 +3,21 @@
   --dt-primary: #923b12;
   --dt-row-thickness: 10px;
 
+  --dt-neutral: #64748b; /* Altere esta cor base para mudar a escala de cinza da tabela inteira */
   --dt-bg: #ffffff;
-  --dt-border: #e2e8f0;
-  --dt-header-bg: #f8fafc;
-  --dt-row-hover: #f1f5f9;
+
+  /* Escala de cinza derivada do dt-neutral */
+  --dt-header-bg: color-mix(in srgb, var(--dt-neutral) 8%, #ffffff);
+  --dt-row-hover: color-mix(in srgb, var(--dt-neutral) 4%, #ffffff);
+  --dt-border: color-mix(in srgb, var(--dt-neutral) 25%, #ffffff);
+  --dt-checkbox-border: color-mix(in srgb, var(--dt-neutral) 40%, #ffffff);
+  --dt-disabled: color-mix(in srgb, var(--dt-neutral) 40%, #ffffff);
+  --dt-icon: var(--dt-neutral);
+  --dt-text-color: #000000; /* Pode ser alterado para color-mix se quiser o texto cinza escuro */
+
+  /* Cores baseadas no primary */
   --dt-row-selected: color-mix(in srgb, var(--dt-primary) 8%, #ffffff);
-  --dt-text-color: #000000;
-  --dt-checkbox-border: #cbd5e1;
   --dt-accent: var(--dt-primary);
   --dt-accent-hover: color-mix(in srgb, var(--dt-primary) 85%, #000000);
   --dt-accent-foreground: #ffffff;
-  --dt-icon: #64748b;
-  --dt-disabled: #cbd5e1;
 }
