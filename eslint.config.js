@@ -69,6 +69,7 @@ export default defineConfig([
       ],
       "no-console": "error",
       "local/no-comments": "warn",
+      "react-refresh/only-export-components": "off",
     },
   },
   ...storybook.configs["flat/recommended"],
