@@ -1,18 +1,16 @@
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ColumnDef } from "@tanstack/react-table";
 
-import { DataTable } from "../ui/data-table";
-import styles from "../ui/data-table.module.css";
+import { DataTable, type DataTableProps } from "../ui";
+import styles from "../ui/hooks/use-create-action-column.module.css";
 
-const meta = {
+const meta: Meta<DataTableProps<Viagem>> = {
   title: "Components/DataTable",
   component: DataTable,
   parameters: {
     layout: "padded",
   },
-} satisfies Meta<typeof DataTable>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -152,7 +150,21 @@ const columns: ColumnDef<Viagem>[] = [
     cell: () => (
       <div className={styles.actionCell}>
         <button className={styles.actionButton} aria-label="Ações">
-          <FontAwesomeIcon icon={faEllipsisVertical} />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="1" />
+            <circle cx="12" cy="5" r="1" />
+            <circle cx="12" cy="19" r="1" />
+          </svg>
         </button>
       </div>
     ),

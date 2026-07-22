@@ -5,7 +5,6 @@ O componente `DataTable` é uma tabela de dados flexível e reutilizável, basea
 ## Dependências
 
 - `@tanstack/react-table`
-- `@fortawesome/react-fontawesome` (para os ícones)
 - Vanilla CSS (`data-table.module.css`) para estilização
 
 ## Como Usar
@@ -36,30 +35,45 @@ export function UsersPage() {
 }
 ```
 
-### Uso com Composition Pattern (Flexível)
+### Uso com Compound Components (Componentes Compostos)
 
-Se você precisa de mais flexibilidade (por exemplo, para injetar componentes visuais como barras de carregamento ou alertas no meio da tabela), o `DataTable` suporta o **Composition Pattern**:
+O arquivo `data-table.tsx` exporta o componente de forma especial utilizando a função `Object.assign`:
+
+```tsx
+export const DataTable = Object.assign(DataTableComponent, {
+  Root: DataTableRoot,
+  ContentTable: DataTableContentTable,
+  Header: DataTableHeader,
+  Body: DataTableBody,
+  Pagination: DataTablePagination,
+});
+```
+
+Esse padrão, conhecido como **Compound Components**, anexa os "subcomponentes" (`Root`, `Header`, etc.) como propriedades ao componente monolítico principal (`DataTableComponent`).
+
+Isso existe para oferecer duas formas de uso com Inversão de Controle:
+
+1. **Uso Monolítico (rápido):** Usar apenas `<DataTable />` chama o `DataTableComponent`, que renderiza o cabeçalho, corpo e paginação todos de uma vez e em ordem estática.
+2. **Uso Composto (flexível):** Usar as tags via notação de ponto (`<DataTable.Root>`, `<DataTable.ContentTable>`, etc.) permite desmontar e reorganizar a tabela. Você pode, por exemplo, injetar um filtro, botões ou qualquer elemento visual. Nesta estrutura, o `Root` controla o estado global da tabela (como `isLoading`), enquanto o `ContentTable` inicializa os dados (`columns` e `data`). A paginação é 100% independente do contexto dos dados da tabela.
+
+Exemplo de uso composto:
 
 ```tsx
 import { DataTable } from "@/features/data-table/ui";
 // ...definições de columns e data...
 
 export function MinhaPagina() {
-  const isLoading = false; // Exemplo de estado
+  const isLoading = false; // Exemplo de estado global de carregamento
 
   return (
-    <DataTable.Root data={data} columns={columns}>
-      <DataTable.Header />
+    <DataTable.Root isLoading={isLoading}>
+      {/* O ContentTable abraça os dados e disponibiliza o contexto da tabela para o Header e Body */}
+      <DataTable.ContentTable data={data} columns={columns}>
+        <DataTable.Header />
+        <DataTable.Body />
+      </DataTable.ContentTable>
 
-      {/* Flexibilidade total! */}
-      {isLoading && (
-        <tr>
-          <td colSpan={columns.length}>Carregando...</td>
-        </tr>
-      )}
-
-      <DataTable.Body />
-
+      {/* A Paginação é independente e renderizada fora do ContentTable */}
       <DataTable.Pagination totalItems={100} />
     </DataTable.Root>
   );

@@ -1,4 +1,3 @@
-export * from "./data-table";
-export * from "./data-table-pagination";
-export * from "./table";
-export * from "./use-create-action-column";
+export * from "./components/data-table";
+export * from "./components/data-table-pagination";
+export * from "./components/table";
