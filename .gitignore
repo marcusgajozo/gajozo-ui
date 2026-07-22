@@ -1,5 +1,7 @@
 * 
 
+!.devcontainer
+!.devcontainer/**/*
 !.github
 !.husky
 !.husky/**/*
@@ -10,6 +12,7 @@
 !docs/**/*
 !src
 !src/**/*
+
 !.dockerignore
 !.gitignore
 !.lintstagedrc
