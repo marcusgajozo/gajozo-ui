@@ -13,6 +13,14 @@ export function DataTableActionDropdown<TData>({
   actions,
   row,
 }: DataTableActionDropdownProps<TData>) {
+  const visibleActions = actions.filter((action) => {
+    return typeof action.omit === "function" ? !action.omit(row) : !action.omit;
+  });
+
+  if (visibleActions.length === 0) {
+    return null;
+  }
+
   return (
     <Menu.Root>
       <Menu.Trigger
@@ -26,7 +34,7 @@ export function DataTableActionDropdown<TData>({
       <Menu.Portal>
         <Menu.Positioner sideOffset={4} align="end">
           <Menu.Popup className={styles.dropdownMenu}>
-            {actions.map((action, index) => {
+            {visibleActions.map((action, index) => {
               const children = <span>{action.title}</span>;
 
               if (action.url) {

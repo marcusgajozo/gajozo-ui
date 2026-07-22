@@ -5,7 +5,7 @@ export interface DataTableAction<TData> {
   icon?: ReactNode;
   url?: string;
   onAction?: (row: TData) => void;
-  omit?: boolean;
+  omit?: boolean | ((row: TData) => boolean);
 }
 
 export function useCreateActionColumn<TData>() {

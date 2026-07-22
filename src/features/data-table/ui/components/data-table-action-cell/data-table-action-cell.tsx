@@ -8,7 +8,9 @@ export interface DataTableActionCellProps<TData> {
 }
 
 export function DataTableActionCell<TData>({ actions, row }: DataTableActionCellProps<TData>) {
-  const activeActions = actions.filter((a) => !a.omit);
+  const activeActions = actions.filter((a) => {
+    return typeof a.omit === "function" ? !a.omit(row) : !a.omit;
+  });
   if (activeActions.length === 0) return null;
 
   return (

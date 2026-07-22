@@ -172,7 +172,7 @@ export const Default: Story = {
         onAction: (row) => window.alert(`Editar item: ${row.id}`),
       },
       {
-        title: "Excluir",
+        title: "Excluir dasdasdasdasd",
         icon: (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -191,6 +191,7 @@ export const Default: Story = {
           </svg>
         ),
         onAction: (row) => window.alert(`Excluir item: ${row.id}`),
+        omit: (row) => row.id === "10",
       },
     ],
   },
