@@ -1,8 +1,11 @@
 {
-  "name": "reusable-ui-components",
+  "name": "componentes-reutilizaveis-react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": "24.14.1"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -11,7 +14,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky",
-    "lint:fix": "eslint . --fix; prettier . --write"
+    "lint:fix": "eslint . --fix; prettier . --write",
+    "sync-nvmrc": "node -e \"const fs=require('fs'); const v=require('./package.json').engines.node.match(/\\d+\\.\\d+\\.\\d+/)[0]; fs.writeFileSync('.nvmrc', 'v'+v); console.log('✅ .nvmrc atualizado para v'+v);\""
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
