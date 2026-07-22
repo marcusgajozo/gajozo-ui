@@ -1,10 +1,11 @@
 import { type ColumnDef, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import * as React from "react";
 
-import { type DataTableAction, useCreateActionColumn } from "../../hooks/use-create-action-column";
-import { useCreateSelectColumn } from "../../hooks/use-create-select-column";
+import type { DataTableAction } from "../../hooks/use-create-action-column";
 import { DataTableContext } from "../data-table-context";
 import { Table } from "../table";
+import { createActionColumn } from "./create-action-column";
+import { createSelectColumn } from "./create-select-column";
 
 export interface DataTableProps<TData = unknown, TValue = unknown> {
   columns: ColumnDef<TData, TValue>[];
@@ -30,19 +31,16 @@ export function DataTableContentTable<TData, TValue>({
   actionColumn,
   children,
 }: DataTableContentTableProps<TData, TValue>) {
-  const getSelectColumn = useCreateSelectColumn<TData>();
-  const getActionColumn = useCreateActionColumn<TData>();
-
   const finalColumns = React.useMemo(() => {
     let cols = [...columns];
     if (onSelectRow) {
-      cols = [getSelectColumn(), ...cols];
+      cols = [createSelectColumn<TData>(), ...cols];
     }
     if (actionColumn && actionColumn.length > 0) {
-      cols = [...cols, getActionColumn(actionColumn)];
+      cols = [...cols, createActionColumn<TData>(actionColumn)];
     }
     return cols;
-  }, [columns, onSelectRow, actionColumn, getSelectColumn, getActionColumn]);
+  }, [columns, onSelectRow, actionColumn]);
 
   const [rowSelection, setRowSelection] = React.useState({});
   // eslint-disable-next-line react-hooks/incompatible-library

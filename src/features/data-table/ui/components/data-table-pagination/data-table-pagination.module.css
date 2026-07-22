@@ -37,7 +37,18 @@
   position: relative;
 }
 
-.selectTrigger {
+.selectTriggerGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: text;
+  border: 1px solid var(--dt-border);
+  padding: 4px 6px;
+  border-radius: 4px;
+  background-color: var(--dt-bg);
+}
+
+.selectInput {
   margin: 0;
   padding: 0;
   border: none;
@@ -46,11 +57,20 @@
   font-size: 14px;
   color: var(--dt-text-color);
   font-weight: 600;
+  outline: none;
+  width: 48px;
+  text-align: left;
+}
+
+.selectIconTrigger {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 4px;
-  outline: none;
+  justify-content: center;
 }
 
 .selectIcon {
@@ -79,6 +99,15 @@
   font-family: var(--dt-font-family);
 }
 
+.selectList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  outline: none;
+}
+
 .selectItem {
   padding: 4px 8px;
   border-radius: 4px;
@@ -89,11 +118,13 @@
 }
 
 .selectItem[data-highlighted] {
-  background-color: var(--dt-primary);
-  color: var(--dt-accent-foreground);
+  background-color: var(--dt-row-hover);
+  color: var(--dt-text-color);
 }
 
 .selectItem[data-selected] {
+  background-color: var(--dt-primary);
+  color: var(--dt-accent-foreground);
   font-weight: bold;
 }
 
@@ -112,14 +143,25 @@
 }
 
 .iconButton {
-  background: none;
+  background-color: transparent;
   border: none;
   color: var(--dt-icon);
   cursor: pointer;
-  padding: 4px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.iconButton:hover:not(:disabled) {
+  background-color: var(--dt-row-hover);
+  color: var(--dt-text-color);
 }
 
 .iconButton:disabled {

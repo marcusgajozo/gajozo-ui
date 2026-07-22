@@ -16,16 +16,25 @@ export function DataTableBody<TData, TValue>() {
             data-testid="data-table-row"
             data-state={row.getIsSelected() && "selected"}
           >
-            {row.getVisibleCells().map((cell) => (
-              <TableCell
-                key={cell.id}
-                style={{
-                  width: cell.column.getSize(),
-                }}
-              >
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </TableCell>
-            ))}
+            {row.getVisibleCells().map((cell) => {
+              const cellValue = cell.getValue();
+              const title =
+                typeof cellValue === "string" || typeof cellValue === "number"
+                  ? String(cellValue)
+                  : undefined;
+
+              return (
+                <TableCell
+                  key={cell.id}
+                  title={title}
+                  style={{
+                    width: cell.column.getSize(),
+                  }}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              );
+            })}
           </TableRow>
         ))
       ) : (

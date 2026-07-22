@@ -35,11 +35,7 @@
   transition: background-color 0.2s;
 }
 
-.tableRow:hover {
-  background-color: var(--dt-row-hover);
-}
-
-.tableRow[data-selected] {
+.tableRow[data-state="selected"] {
   background-color: var(--dt-row-selected);
 }
 

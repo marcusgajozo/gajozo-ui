@@ -1,5 +1,5 @@
 import { DataTableBody } from "../data-table-body";
-import { DataTableContentTable, type DataTableProps } from "../data-table-content";
+import { DataTableContentTable, type DataTableProps } from "../data-table-content-table";
 import { DataTableHeader } from "../data-table-header";
 import { DataTablePagination } from "../data-table-pagination";
 import { DataTableRoot } from "../data-table-root";

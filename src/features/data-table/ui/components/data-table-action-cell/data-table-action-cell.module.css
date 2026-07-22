@@ -1,0 +1,73 @@
+.actionCell {
+  width: 48px;
+  text-align: center;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: var(--dt-accent);
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 16px;
+  outline: none;
+  font-family: var(--dt-font-family);
+  border-radius: 4px;
+}
+
+.actionButton:hover,
+.actionButton[data-highlighted] {
+  color: var(--dt-accent-hover);
+  background-color: var(--dt-row-hover);
+}
+
+.actionButton[data-popup-open],
+.actionButton[data-state="open"] {
+  background-color: var(--dt-header-bg);
+  color: var(--dt-accent-hover);
+}
+
+.actionButton:focus-visible {
+  outline: 2px solid var(--dt-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.dropdownMenu {
+  background-color: var(--dt-bg);
+  border: 1px solid var(--dt-border);
+  border-radius: 6px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 50;
+  min-width: 140px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  font-family: var(--dt-font-family);
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  font-family: var(--dt-font-family);
+  color: var(--dt-text-color);
+  cursor: pointer;
+  border-radius: 4px;
+  outline: none;
+}
+
+.dropdownItem:hover,
+.dropdownItem[data-highlighted] {
+  background-color: var(--dt-header-bg);
+  color: var(--dt-accent-hover);
+}
